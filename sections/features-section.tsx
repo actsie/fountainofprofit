@@ -1,5 +1,5 @@
 import SectionTitle from "@/components/section-title";
-import { ArrowUpRightIcon, SparklesIcon } from "lucide-react";
+import { ArrowUpRightIcon, WorkflowIcon } from "lucide-react";
 import { features } from "@/data/features";
 import AnimatedContent from "@/components/animated-content";
 
@@ -11,7 +11,7 @@ export default function FeaturesSection() {
                     <div className="p-4 pt-16 md:p-16 flex flex-col items-start md:sticky md:top-26">
                         <SectionTitle
                             dir="left"
-                            icon={SparklesIcon}
+                            icon={WorkflowIcon}
                             title="How it works"
                             subtitle="Four steps from job posting to working automations. No ambiguity, no ongoing dependency on us."
                         />

@@ -1,7 +1,7 @@
 import AnimatedContent from "@/components/animated-content";
 import SectionTitle from "@/components/section-title";
 import { faqs } from "@/data/faqs";
-import { ChevronDownIcon, SparklesIcon } from "lucide-react";
+import { ChevronDownIcon, HelpCircleIcon } from "lucide-react";
 
 export default function FaqSection() {
     return (
@@ -9,7 +9,7 @@ export default function FaqSection() {
             <div className="px-4 md:px-16 lg:px-24 xl:px-32">
                 <div className="p-4 pt-20 md:p-20 flex flex-col items-center max-w-7xl mx-auto justify-center border-x border-[#edf9f8]">
                     <SectionTitle
-                        icon={SparklesIcon}
+                        icon={HelpCircleIcon}
                         title="Common questions"
                         subtitle="Straight answers about what we do, what we don't do, and how the sprint works."
                     />

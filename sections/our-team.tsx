@@ -1,7 +1,7 @@
 import AnimatedContent from "@/components/animated-content";
 import SectionTitle from "@/components/section-title";
 import { team } from "@/data/team";
-import { SparklesIcon } from "lucide-react";
+import { LinkedinIcon, UsersIcon } from "lucide-react";
 
 export default function OurTeamSection() {
     const bios: Record<string, string> = {
@@ -13,7 +13,7 @@ export default function OurTeamSection() {
         <section id="team" className="border-b border-[#edf9f8] px-4 md:px-16 lg:px-24 xl:px-32">
             <div className="pt-20 pb-32 flex flex-col items-center max-w-7xl mx-auto justify-center border-x border-[#edf9f8]">
                 <SectionTitle
-                    icon={SparklesIcon}
+                    icon={UsersIcon}
                     title="We've been on the inside"
                     subtitle="We learned the hard way what should be automated vs. staffed. Now we apply that playbook for other companies."
                 />
@@ -25,7 +25,14 @@ export default function OurTeamSection() {
                                 alt={member.name}
                                 className="w-52 h-64 object-cover rounded-lg"
                             />
-                            <h3 className="text-lg font-medium mt-4">{member.name}</h3>
+                            <div className="flex items-center gap-2 mt-4">
+                                <h3 className="text-lg font-medium">{member.name}</h3>
+                                {member.linkedin && (
+                                    <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-purple-500 hover:text-purple-600">
+                                        <LinkedinIcon size={16} />
+                                    </a>
+                                )}
+                            </div>
                             <p className="text-purple-500 text-sm font-medium">{member.role}</p>
                             {bios[member.name] && (
                                 <p className="text-zinc-500 text-sm mt-3 leading-6">

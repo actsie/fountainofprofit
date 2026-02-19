@@ -1,4 +1,4 @@
-import { InstagramIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
+import { InstagramIcon, LinkedinIcon } from "lucide-react";
 import Image from "next/image";
 import AnimatedContent from "./animated-content";
 
@@ -24,18 +24,17 @@ export default function Footer() {
                     </AnimatedContent>
                     <div>
                         <p className="uppercase font-semibold text-purple-600 text-base">Social</p>
-                        <AnimatedContent className="flex flex-col mt-6 gap-3">
-                            <a href="#!" className="flex items-center gap-2 text-purple-500">
-                                <TwitterIcon size={20} />
-                                <p>Twitter</p>
+                        <AnimatedContent className="flex items-center mt-6 gap-4">
+                            <a href="#!" className="text-purple-500 hover:text-purple-600">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-label="X (formerly Twitter)">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                </svg>
                             </a>
-                            <a href="#!" className="flex items-center gap-2 text-purple-500">
+                            <a href="#!" className="text-purple-500 hover:text-purple-600">
                                 <LinkedinIcon size={20} />
-                                <p>Linkedin</p>
                             </a>
-                            <a href="#!" className="flex items-center gap-2 text-purple-500">
+                            <a href="#!" className="text-purple-500 hover:text-purple-600">
                                 <InstagramIcon size={20} />
-                                <p>Instagram</p>
                             </a>
                         </AnimatedContent>
                     </div>

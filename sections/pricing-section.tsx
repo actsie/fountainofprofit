@@ -3,14 +3,14 @@
 import AnimatedContent from "@/components/animated-content";
 import SectionTitle from "@/components/section-title";
 import { pricing } from "@/data/pricing";
-import { CheckIcon, SparklesIcon } from "lucide-react";
+import { CheckIcon, CoinsIcon } from "lucide-react";
 
 export default function PricingSection() {
     return (
         <section id="pricing" className="border-b border-[#edf9f8] px-4 md:px-16 lg:px-24 xl:px-32">
             <div className="p-4 pt-20 flex flex-col items-center max-w-7xl mx-auto justify-center border-x border-[#edf9f8]">
                 <SectionTitle
-                    icon={SparklesIcon}
+                    icon={CoinsIcon}
                     title="Cheaper than hiring"
                     subtitle="A mid-level hire costs $7,000–$12,000 a month fully loaded. A sprint costs a fraction of that — and you keep the automations forever."
                 />
