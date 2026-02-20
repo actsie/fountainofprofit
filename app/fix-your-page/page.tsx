@@ -27,7 +27,7 @@ const steps = [
     {
         icon: RocketIcon,
         title: "You get the new page",
-        description: "Delivered the same day. Ready to publish or hand off to your dev.",
+        description: "Delivered the same day. We host it under your domain, or hand it off — your call.",
         iconBg: "bg-[#c98dc0]",
     },
 ];
@@ -129,29 +129,64 @@ export default function FixYourPage() {
                 </div>
             </section>
 
-            {/* Pricing + CTA */}
+            {/* Pricing */}
             <section className="border-b border-[#edf9f8] px-4 md:px-16 lg:px-24 xl:px-32">
                 <div className="max-w-7xl mx-auto border-x border-[#edf9f8]">
-                    <AnimatedContent className="flex flex-col items-center text-center py-24 px-4">
-                        <div className="flex items-center gap-2 bg-purple-50 border border-purple-100 px-4 py-1.5 rounded-full text-sm text-purple-600 font-medium mb-6">
-                            $100–$200 flat · delivered same day
+                    <div className="p-8 md:p-16">
+                        <AnimatedContent className="text-center mb-12">
+                            <h2 className="font-urbanist font-semibold text-3xl md:text-4xl text-gray-800">Simple pricing</h2>
+                            <p className="text-zinc-500 text-base/7 mt-3 max-w-md mx-auto">One-time rebuild, or we host it and keep it running for you.</p>
+                        </AnimatedContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                            {/* One-time */}
+                            <AnimatedContent className="flex flex-col border border-[#edf9f8] rounded-xl p-8 bg-[#f7fcfb]">
+                                <p className="text-sm font-medium text-zinc-500 uppercase tracking-wide">The Fix</p>
+                                <div className="mt-4 flex items-end gap-1">
+                                    <span className="font-urbanist font-bold text-4xl text-gray-800">$150</span>
+                                    <span className="text-zinc-400 text-sm mb-1.5">one-time</span>
+                                </div>
+                                <p className="text-zinc-500 text-sm/6 mt-3">We rebuild your page in one day. You get the files — host it wherever you like.</p>
+                                <ul className="mt-6 flex flex-col gap-3 flex-1">
+                                    {["Same-day delivery", "Cleaner layout + section order", "Clear path to booking", "Mobile-friendly"].map((f, i) => (
+                                        <li key={i} className="flex items-center gap-2 text-sm text-zinc-600">
+                                            <div className="p-0.5 rounded-full bg-purple-500 shrink-0">
+                                                <CheckIcon size={10} className="text-white" strokeWidth={3} />
+                                            </div>
+                                            {f}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <a href={TALLY_URL} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1.5 mt-8 py-2.5 px-6 border border-[#edf9f8] bg-white text-zinc-700 rounded-full hover:bg-gray-50 transition-colors text-sm">
+                                    Get started
+                                    <ArrowUpRightIcon size={14} />
+                                </a>
+                            </AnimatedContent>
+
+                            {/* Hosted */}
+                            <AnimatedContent className="flex flex-col border border-purple-200 rounded-xl p-8 bg-purple-500 text-white">
+                                <p className="text-sm font-medium text-purple-200 uppercase tracking-wide">The Fix + Host</p>
+                                <div className="mt-4 flex items-end gap-1">
+                                    <span className="font-urbanist font-bold text-4xl">$150</span>
+                                    <span className="text-purple-200 text-sm mb-1.5">+ $40/mo</span>
+                                </div>
+                                <p className="text-purple-100 text-sm/6 mt-3">We rebuild it, host it under your domain, and keep it updated. Just text us when something needs to change.</p>
+                                <ul className="mt-6 flex flex-col gap-3 flex-1">
+                                    {["Everything in The Fix", "Hosted under your domain", "Small updates included", "We handle the tech, you run your business"].map((f, i) => (
+                                        <li key={i} className="flex items-center gap-2 text-sm text-purple-100">
+                                            <div className="p-0.5 rounded-full bg-white/30 shrink-0">
+                                                <CheckIcon size={10} className="text-white" strokeWidth={3} />
+                                            </div>
+                                            {f}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <a href={TALLY_URL} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1.5 mt-8 py-2.5 px-6 bg-white text-purple-600 rounded-full hover:bg-purple-50 transition-colors text-sm font-medium">
+                                    Get started
+                                    <ArrowUpRightIcon size={14} />
+                                </a>
+                            </AnimatedContent>
                         </div>
-                        <h2 className="font-urbanist font-semibold text-4xl md:text-5xl max-w-xl text-gray-800">
-                            Ready to fix your page?
-                        </h2>
-                        <p className="text-zinc-500 text-base/7 max-w-md mt-5">
-                            Send us your URL and we&apos;ll take it from there. No back and forth, no waiting weeks. One day and it&apos;s done.
-                        </p>
-                        <a
-                            href={TALLY_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1.5 py-2.5 px-8 mt-8 bg-purple-500 text-white rounded-full shadow-[inset_0_2px_4px_rgba(255,255,255,0.3)] hover:bg-purple-600 transition-colors"
-                        >
-                            Fix my page
-                            <ArrowUpRightIcon size={16} />
-                        </a>
-                    </AnimatedContent>
+                    </div>
                 </div>
             </section>
         </main>
