@@ -1,10 +1,10 @@
 import AnimatedContent from "@/components/animated-content";
 import Link from "next/link";
 import { pitchConfig } from "@/pitch-config";
+import type { PitchConfig } from "@/pitches";
 
-const { hero } = pitchConfig;
-
-export default function HeroSection() {
+export default function HeroSection({ config }: { config?: PitchConfig["hero"] }) {
+    const hero = config ?? pitchConfig.hero;
     return (
         <section className="bg-[url('/assets/hero-gradient-bg.png')] bg-cover bg-center bg-no-repeat px-4 md:px-16 lg:px-24 xl:px-32">
             <div className="max-w-7xl mx-auto flex flex-col items-center justify-center h-screen">
