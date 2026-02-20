@@ -1,7 +1,10 @@
 "use client";
 import AnimatedContent from "@/components/animated-content";
+import { pitchConfig } from "@/pitch-config";
 import { ArrowUpRightIcon, ChevronUpIcon } from "lucide-react";
 import Image from "next/image";
+
+const { cta } = pitchConfig;
 
 export default function CtaSection() {
     return (
@@ -9,26 +12,26 @@ export default function CtaSection() {
             <div className="max-w-7xl mx-auto border-x border-[#edf9f8]">
                 <AnimatedContent className="flex flex-col items-center text-center py-28 pb-36 px-4">
                     <h2 className="font-urbanist font-semibold text-4xl md:text-5xl max-w-xl text-gray-800">
-                        Find out what&apos;s <span className="underline decoration-2 underline-offset-4">automatable</span>
+                        {cta.headlineLine1} <span className="underline decoration-2 underline-offset-4">{cta.headlineAccent}</span>
                         <br />
-                        before you hire
+                        {cta.headlineLine2}
                     </h2>
                     <p className="text-zinc-500 text-base/7 max-w-md mt-5">
-                        Send us the job posting. We&apos;ll map what can be automated and what can&apos;t — free, no commitment.
+                        {cta.subtext}
                     </p>
                     <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
                         <a
                             href="#pricing"
                             className="flex items-center gap-1.5 py-2.5 px-6 bg-purple-500 text-white rounded-full shadow-[inset_0_2px_4px_rgba(255,255,255,0.3)] hover:bg-purple-600 transition-colors"
                         >
-                            Book a free scoping call
+                            {cta.ctaPrimary}
                             <ArrowUpRightIcon size={16} />
                         </a>
                         <a
                             href="#features"
                             className="py-2.5 px-6 border border-[#edf9f8] bg-white text-zinc-600 rounded-full hover:bg-gray-50 transition-colors"
                         >
-                            See how it works
+                            {cta.ctaSecondary}
                         </a>
                     </div>
                 </AnimatedContent>
