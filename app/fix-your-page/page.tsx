@@ -188,6 +188,39 @@ export default function FixYourPage() {
                                 </a>
                             </AnimatedContent>
                         </div>
+
+                        {/* Add-ons */}
+                        <AnimatedContent className="max-w-3xl mx-auto mt-8 border border-[#edf9f8] rounded-xl overflow-hidden">
+                            <div className="px-6 py-4 bg-[#f7fcfb] border-b border-[#edf9f8]">
+                                <p className="text-sm font-medium text-zinc-600">Optional add-ons</p>
+                            </div>
+                            <div className="divide-y divide-[#edf9f8]">
+                                <div className="flex items-start justify-between gap-4 px-6 py-4">
+                                    <div>
+                                        <p className="text-sm font-medium text-gray-800">Deposit button</p>
+                                        <p className="text-xs text-zinc-500 mt-0.5">A &ldquo;Pay deposit&rdquo; button linked to your Stripe Payment Link. You already have Stripe set up.</p>
+                                    </div>
+                                    <span className="text-sm font-medium text-purple-500 shrink-0">+$50</span>
+                                </div>
+                                <div className="flex items-start justify-between gap-4 px-6 py-4">
+                                    <div>
+                                        <p className="text-sm font-medium text-gray-800">Deposit button + Stripe setup</p>
+                                        <p className="text-xs text-zinc-500 mt-0.5">We set up your Stripe account and create the deposit link. Includes the button on your page.</p>
+                                    </div>
+                                    <span className="text-sm font-medium text-purple-500 shrink-0">+$100</span>
+                                </div>
+                                <div className="flex items-start justify-between gap-4 px-6 py-4">
+                                    <div>
+                                        <p className="text-sm font-medium text-gray-800">Book now button</p>
+                                        <p className="text-xs text-zinc-500 mt-0.5">A clear &ldquo;Book now&rdquo; button linked to your existing booking tool (Vagaro, Booksy, Square, etc.).</p>
+                                    </div>
+                                    <span className="text-sm font-medium text-purple-500 shrink-0">Included</span>
+                                </div>
+                            </div>
+                            <div className="px-6 py-3 bg-[#f7fcfb] border-t border-[#edf9f8]">
+                                <p className="text-xs text-zinc-400">No custom code. No payment info handled by us. Stripe Payment Links do the work.</p>
+                            </div>
+                        </AnimatedContent>
                     </div>
                 </div>
             </section>
