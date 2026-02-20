@@ -8,26 +8,26 @@ const whatsIncluded = [
     "Cleaner layout using your existing copy — no rewriting needed",
     "Better section order so visitors know what to do next",
     "A clear path to booking or contacting you",
-    "Mobile-friendly and live on your site",
+    "Hosted and live — we walk you through pointing your domain",
 ];
 
 const steps = [
     {
         icon: ClipboardIcon,
-        title: "Send your URL + login",
-        description: "Fill out the form with your current page and invite us as admin (or just share your login). We handle the rest.",
+        title: "Send us your site",
+        description: "Share your URL and a bit about your business. That's all we need to get started.",
         iconBg: "bg-purple-500",
     },
     {
         icon: PencilIcon,
         title: "We rebuild in one day",
-        description: "We take your existing copy and restructure it — cleaner layout, smarter flow, obvious next step.",
+        description: "Same content, new layout. Think of it as a facelift — cleaner design, smarter flow, obvious next step for your visitors.",
         iconBg: "bg-[#5bbfba]",
     },
     {
         icon: RocketIcon,
         title: "You get the new page",
-        description: "We put it live on your site (or host it for you if you want zero hassle).",
+        description: "We deploy it to a live URL. You point your domain to it — we walk you through the 10-minute setup.",
         iconBg: "bg-[#c98dc0]",
     },
 ];
@@ -147,9 +147,9 @@ export default function FixYourPage() {
                                     <span className="font-urbanist font-bold text-4xl text-gray-800">$150</span>
                                     <span className="text-zinc-400 text-sm mb-1.5">one-time</span>
                                 </div>
-                                <p className="text-zinc-500 text-sm/6 mt-3">We rebuild your page inside your existing site (Wix, Squarespace, GoDaddy, WordPress). Live the same day. No tech handoff.</p>
+                                <p className="text-zinc-500 text-sm/6 mt-3">We build your new page and deploy it. You point your domain to it — we walk you through the setup. Takes about 10 minutes.</p>
                                 <ul className="mt-6 flex flex-col gap-3 flex-1">
-                                    {["Same-day delivery", "Rebuilt inside your existing site", "Clear path to booking", "Mobile-friendly"].map((f, i) => (
+                                    {["Same-day delivery", "Hosted on a fast, reliable server", "Clear path to booking", "Mobile-friendly"].map((f, i) => (
                                         <li key={i} className="flex items-center gap-2 text-sm text-zinc-600">
                                             <div className="p-0.5 rounded-full bg-purple-500 shrink-0">
                                                 <CheckIcon size={10} className="text-white" strokeWidth={3} />
@@ -171,7 +171,7 @@ export default function FixYourPage() {
                                     <span className="font-urbanist font-bold text-4xl">$150</span>
                                     <span className="text-purple-200 text-sm mb-1.5">+ $40/mo</span>
                                 </div>
-                                <p className="text-purple-100 text-sm/6 mt-3">We rebuild it, host it under your domain, and keep it updated. Just text us when something needs to change.</p>
+                                <p className="text-purple-100 text-sm/6 mt-3">We build it, host it, and keep it running under your domain. Something needs updating? Just text us.</p>
                                 <ul className="mt-6 flex flex-col gap-3 flex-1">
                                     {["Everything in The Fix", "Hosted under your domain", "Small updates included", "We handle the tech, you run your business"].map((f, i) => (
                                         <li key={i} className="flex items-center gap-2 text-sm text-purple-100">
