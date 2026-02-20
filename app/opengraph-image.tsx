@@ -26,31 +26,34 @@ export default async function Image() {
             >
                 <img
                     src={logoSrc}
-                    width={96}
-                    height={96}
-                    style={{ borderRadius: 24 }}
+                    width={72}
+                    height={72}
+                    style={{ borderRadius: 18 }}
                 />
                 <div
                     style={{
                         marginTop: 32,
-                        fontSize: 64,
-                        fontWeight: 700,
-                        color: "#1f2937",
-                        letterSpacing: "-1px",
+                        fontSize: 28,
+                        fontWeight: 500,
+                        color: "#9ca3af",
+                        letterSpacing: "-0.5px",
                     }}
                 >
-                    Automation Factory
+                    You&apos;re scaling.
                 </div>
                 <div
                     style={{
-                        marginTop: 16,
-                        fontSize: 28,
-                        color: "#71717a",
-                        maxWidth: 700,
+                        marginTop: 8,
+                        fontSize: 64,
+                        fontWeight: 800,
+                        color: "#1f2937",
+                        letterSpacing: "-2px",
                         textAlign: "center",
+                        maxWidth: 900,
+                        lineHeight: 1.1,
                     }}
                 >
-                    Automate the role before you hire.
+                    Half of it should be automated.
                 </div>
             </div>
         ),
