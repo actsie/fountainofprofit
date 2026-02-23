@@ -1,7 +1,7 @@
 "use client";
 import AnimatedContent from "@/components/animated-content";
 import FypModal from "@/components/fyp-modal";
-import { ArrowUpRightIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon, ClipboardIcon, PencilIcon, RocketIcon } from "lucide-react";
+import { ArrowUpRightIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, ClipboardIcon, PencilIcon, RocketIcon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
@@ -361,6 +361,45 @@ export default function FixYourPage() {
                             </div>
                         </div>
                     </div>
+                </section>
+
+                {/* Final CTA */}
+                <section className="relative border-b border-[#edf9f8] px-4 md:px-16 lg:px-24 xl:px-32">
+                    <div className="max-w-7xl mx-auto border-x border-[#edf9f8]">
+                        <div className="p-8 md:p-16 pb-24 md:pb-32 flex flex-col items-center text-center">
+                            <AnimatedContent>
+                                <h2 className="font-urbanist font-bold text-4xl md:text-5xl text-gray-800 max-w-xl">
+                                    Ready to make your page easier to book from?
+                                </h2>
+                                <p className="text-zinc-500 text-base/7 mt-4 max-w-md mx-auto">
+                                    No layers, no long timelines. Just a clean rebuild that helps your page convert better.
+                                </p>
+                                <div className="flex items-center justify-center mt-8">
+                                    <button
+                                        onClick={() => openModal("Fix Your Page — Final CTA")}
+                                        className="flex items-center justify-center gap-1.5 py-3 px-8 border border-purple-200 bg-linear-to-tl from-purple-600 to-purple-500 text-white rounded-full"
+                                    >
+                                        Send us your page
+                                        <ArrowUpRightIcon size={16} />
+                                    </button>
+                                </div>
+                            </AnimatedContent>
+                        </div>
+                    </div>
+                    <button
+                        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                        className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-10 cursor-pointer"
+                        aria-label="Scroll to top"
+                    >
+                        <Image
+                            src="/assets/auto-factory.png"
+                            alt="Scroll to top"
+                            width={48}
+                            height={48}
+                            className="h-12 w-12 opacity-90 hover:opacity-100 transition-opacity"
+                        />
+                        <ChevronUpIcon size={14} strokeWidth={3} className="absolute inset-0 m-auto text-white" />
+                    </button>
                 </section>
             </main>
         </>
