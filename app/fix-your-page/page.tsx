@@ -170,15 +170,15 @@ export default function FixYourPage() {
                                 </AnimatedContent>
                                 <AnimatedContent className="p-4 md:p-6 bg-purple-500 w-full rounded-xl mt-12">
                                     <p className="text-lg text-white">
-                                        If your page isn&apos;t converting visitors, it&apos;s not a content problem. It&apos;s a layout problem.
+                                        You may not need new content. You may just need a page that guides people better.
                                     </p>
-                                    <button
-                                        onClick={() => openModal("Fix Your Page — How It Works CTA")}
-                                        className="bg-white hover:bg-gray-100 transition-colors px-5 py-2 rounded-full mt-6 flex items-center gap-1 text-sm font-medium"
+                                    <a
+                                        href="#pricing"
+                                        className="bg-white hover:bg-gray-100 transition-colors px-5 py-2 rounded-full mt-6 flex items-center gap-1 text-sm font-medium w-max"
                                     >
-                                        Send us your page
+                                        See pricing
                                         <ArrowUpRightIcon size={16} />
-                                    </button>
+                                    </a>
                                 </AnimatedContent>
                             </div>
                         </div>
@@ -200,7 +200,7 @@ export default function FixYourPage() {
                 </section>
 
                 {/* Pricing */}
-                <section className="border-b border-[#edf9f8] px-4 md:px-16 lg:px-24 xl:px-32">
+                <section id="pricing" className="border-b border-[#edf9f8] px-4 md:px-16 lg:px-24 xl:px-32">
                     <div className="max-w-7xl mx-auto border-x border-[#edf9f8]">
                         <div className="p-8 md:p-16">
                             <AnimatedContent className="text-center mb-12">

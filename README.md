@@ -1,41 +1,26 @@
-# Buildify - AI Agents SaaS Website Template
+# Fountain of Scale
 
-#### Preview
+Landing page for [Fountain of Scale](https://fountainofscale.com) — automating roles before companies hire for them.
 
- - [Demo](https://themewagon.github.io/buildify/)
+## Stack
 
-#### Download
- - [Download from ThemeWagon](https://themewagon.com/themes/buildify/)
+- Next.js (App Router), TypeScript, Tailwind CSS v4, GSAP, lucide-react
 
 ## Getting Started
 
-1. Clone Repository
-```
-git clone https://github.com/themewagon/buildify.git
-```
-2. Install Dependencies
-```
-npm i
-```
-3. Run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-## Author 
-```
-Design and code is completely written by PrebuiltUI and development team. 
-```
+## Deployment
 
-## License
+Pushing to `main` deploys to both remotes simultaneously:
+- https://github.com/Exploration-labs/automation-factory
+- https://github.com/actsie/auto-factory-demo
 
- - Design and Code is Copyright &copy; <a href="https://prebuiltui.com" target="_blank">PrebuiltUI</a>
- - Licensed cover under [MIT]
- - Distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+Vercel auto-deploys every branch as a preview URL.
+
+## Per-Pitch Workflow
+
+See `CLAUDE.md` for full instructions on creating personalized pitch pages.
