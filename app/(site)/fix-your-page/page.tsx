@@ -308,7 +308,7 @@ export default function FixYourPage() {
                                     {/* Prev */}
                                     <button
                                         onClick={() => setCarouselIndex(i => i === 0 ? qrImages.length - 1 : i - 1)}
-                                        className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 backdrop-blur rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity"
+                                        className="absolute left-6 top-1/2 -translate-y-1/2 p-2 bg-white/80 backdrop-blur rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity"
                                         aria-label="Previous"
                                     >
                                         <ChevronLeftIcon size={16} className="text-gray-600" />
@@ -316,7 +316,7 @@ export default function FixYourPage() {
                                     {/* Next */}
                                     <button
                                         onClick={() => setCarouselIndex(i => i + 1)}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 backdrop-blur rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity"
+                                        className="absolute right-6 top-1/2 -translate-y-1/2 p-2 bg-white/80 backdrop-blur rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity"
                                         aria-label="Next"
                                     >
                                         <ChevronRightIcon size={16} className="text-gray-600" />

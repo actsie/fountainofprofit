@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import { ClockIcon, MapPinIcon, MenuIcon, PhoneIcon, StarIcon, XIcon } from "lucide-react";
+import { ChevronDownIcon, ClockIcon, MapPinIcon, MenuIcon, PhoneIcon, Share2Icon, StarIcon, XIcon } from "lucide-react";
 
 const menuItems = [
     {
@@ -80,17 +80,28 @@ const testimonials = [
 export default function SampleRestaurant() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [testimonialIndex, setTestimonialIndex] = useState(0);
+    const [shared, setShared] = useState(false);
+
+    function handleShare() {
+        if (navigator.share) {
+            navigator.share({ title: "Harvest Table", text: "Check out Harvest Table in San Francisco", url: window.location.href });
+        } else {
+            navigator.clipboard.writeText(window.location.href);
+            setShared(true);
+            setTimeout(() => setShared(false), 2000);
+        }
+    }
 
     return (
         <div className="bg-stone-50 min-h-screen font-serif">
             {/* Fountain of Scale banner */}
-            <div className="bg-purple-500 text-white text-center text-xs py-2 px-4">
+            <div className="bg-amber-700 text-white text-center text-xs py-2 px-4 font-sans">
                 This is a sample page built by{" "}
-                <a href="/fix-your-page" className="underline font-medium hover:text-purple-200 transition-colors">
+                <a href="/fix-your-page" className="underline font-medium hover:text-amber-200 transition-colors">
                     Fountain of Scale
                 </a>
                 {" "}· Want one like this for your business?{" "}
-                <a href="/fix-your-page" className="underline font-medium hover:text-purple-200 transition-colors">
+                <a href="/fix-your-page" className="underline font-medium hover:text-amber-200 transition-colors">
                     Get yours →
                 </a>
             </div>
@@ -188,7 +199,7 @@ export default function SampleRestaurant() {
             </section>
 
             {/* Menu */}
-            <section id="menu" className="py-20 px-6">
+            <section id="menu" className="pt-40 pb-40 px-6">
                 <div className="max-w-6xl mx-auto">
                     <div className="text-center mb-14 font-sans">
                         <p className="text-xs uppercase tracking-widest text-amber-700 mb-2">What we&apos;re cooking</p>
@@ -291,35 +302,95 @@ export default function SampleRestaurant() {
 
             {/* Booking CTA */}
             <section id="contact" className="py-20 px-6 bg-stone-900 text-white">
-                <div className="max-w-3xl mx-auto text-center">
-                    <p className="text-xs uppercase tracking-widest text-stone-400 mb-3 font-sans">Come visit us</p>
-                    <h2 className="text-4xl font-bold">Ready for a great night out?</h2>
-                    <p className="text-stone-400 mt-4 text-sm leading-6 max-w-md mx-auto font-sans">
-                        Reservations are recommended, especially on weekends. Walk-ins welcome based on availability.
-                    </p>
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8 font-sans">
-                        <a
-                            href="tel:+14155550142"
-                            className="flex items-center gap-2 bg-white text-stone-900 px-7 py-3 rounded-full text-sm font-medium hover:bg-stone-100 transition-colors"
-                        >
-                            <PhoneIcon size={14} />
-                            (415) 555-0142
-                        </a>
-                        <a
-                            href="#"
-                            className="flex items-center gap-2 bg-amber-700 text-white px-7 py-3 rounded-full text-sm font-medium hover:bg-amber-800 transition-colors"
-                        >
-                            Reserve online
-                        </a>
-                    </div>
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-8 mt-12 text-sm text-stone-400 font-sans">
-                        <div className="flex items-center gap-2">
-                            <ClockIcon size={14} />
-                            Tue–Sun · 5pm–10pm · Bar opens at 4pm
+                <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+                    {/* Left col */}
+                    <div>
+                        <p className="text-xs uppercase tracking-widest text-stone-400 mb-3 font-sans">Come visit us</p>
+                        <h2 className="text-4xl font-bold">Ready for a great night out?</h2>
+                        <p className="text-stone-400 mt-4 text-sm leading-6 font-sans">
+                            Reservations are recommended, especially on weekends. Walk-ins welcome based on availability.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 mt-8 font-sans">
+                            <a
+                                href="tel:+14155550142"
+                                className="flex items-center gap-2 bg-white text-stone-900 px-7 py-3 rounded-full text-sm font-medium hover:bg-stone-100 transition-colors w-max"
+                            >
+                                <PhoneIcon size={14} />
+                                (415) 555-0142
+                            </a>
+                            <button
+                                onClick={handleShare}
+                                className="flex items-center gap-2 bg-amber-700 text-white px-7 py-3 rounded-full text-sm font-medium hover:bg-amber-800 transition-colors w-max"
+                            >
+                                <Share2Icon size={14} />
+                                {shared ? "Link copied!" : "Share with friends"}
+                            </button>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <MapPinIcon size={14} />
-                            718 Valencia St, San Francisco
+                        <div className="flex flex-col gap-3 mt-10 text-sm text-stone-400 font-sans">
+                            <div className="flex items-center gap-2">
+                                <ClockIcon size={14} />
+                                Tue–Sun · 5pm–10pm · Bar opens at 4pm
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <MapPinIcon size={14} />
+                                718 Valencia St, San Francisco
+                            </div>
+                        </div>
+                    </div>
+                    {/* Right col — reservation form */}
+                    <div className="bg-stone-800 rounded-2xl p-8 font-sans">
+                        <p className="text-sm font-semibold text-white mb-6">Reserve a table</p>
+                        <div className="flex flex-col gap-4">
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="flex flex-col gap-1.5">
+                                    <label className="text-xs text-stone-400">First name</label>
+                                    <input type="text" placeholder="Jane" className="bg-stone-700 text-white text-sm rounded-lg px-4 py-2.5 placeholder-stone-500 outline-none focus:ring-1 focus:ring-amber-700" />
+                                </div>
+                                <div className="flex flex-col gap-1.5">
+                                    <label className="text-xs text-stone-400">Last name</label>
+                                    <input type="text" placeholder="Smith" className="bg-stone-700 text-white text-sm rounded-lg px-4 py-2.5 placeholder-stone-500 outline-none focus:ring-1 focus:ring-amber-700" />
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-xs text-stone-400">Email</label>
+                                <input type="email" placeholder="jane@example.com" className="bg-stone-700 text-white text-sm rounded-lg px-4 py-2.5 placeholder-stone-500 outline-none focus:ring-1 focus:ring-amber-700" />
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="flex flex-col gap-1.5">
+                                    <label className="text-xs text-stone-400">Date</label>
+                                    <input type="date" className="bg-stone-700 text-white text-sm rounded-lg px-4 py-2.5 outline-none focus:ring-1 focus:ring-amber-700" />
+                                </div>
+                                <div className="flex flex-col gap-1.5">
+                                    <label className="text-xs text-stone-400">Time</label>
+                                    <div className="relative">
+                                        <select className="w-full appearance-none bg-stone-700 text-white text-sm rounded-lg px-4 py-2.5 pr-9 outline-none focus:ring-1 focus:ring-amber-700">
+                                            <option>5:00 PM</option>
+                                            <option>5:30 PM</option>
+                                            <option>6:00 PM</option>
+                                            <option>6:30 PM</option>
+                                            <option>7:00 PM</option>
+                                            <option>7:30 PM</option>
+                                            <option>8:00 PM</option>
+                                            <option>8:30 PM</option>
+                                            <option>9:00 PM</option>
+                                        </select>
+                                        <ChevronDownIcon size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-xs text-stone-400">Party size</label>
+                                <div className="relative">
+                                    <select className="w-full appearance-none bg-stone-700 text-white text-sm rounded-lg px-4 py-2.5 pr-9 outline-none focus:ring-1 focus:ring-amber-700">
+                                        {[1,2,3,4,5,6,7,8].map(n => <option key={n}>{n} {n === 1 ? "guest" : "guests"}</option>)}
+                                    </select>
+                                    <ChevronDownIcon size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
+                                </div>
+                            </div>
+                            <button className="mt-2 w-full bg-amber-700 hover:bg-amber-800 transition-colors text-white text-sm font-medium py-3 rounded-lg">
+                                Request reservation
+                            </button>
+                            <p className="text-stone-500 text-xs text-center">We&apos;ll confirm your reservation by email within 24 hours.</p>
                         </div>
                     </div>
                 </div>
