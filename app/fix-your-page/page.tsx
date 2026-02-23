@@ -30,13 +30,13 @@ const steps = [
     {
         icon: PencilIcon,
         title: "We rebuild in one day",
-        description: "Same content, new layout. Think of it as a facelift — cleaner design, smarter flow, obvious next step for your visitors.",
+        description: "We rebuild the layout from scratch around what converts — right order, right emphasis, one clear action. By end of day, it's done.",
         iconBg: "bg-[#5bbfba]",
     },
     {
         icon: RocketIcon,
         title: "You get the new page",
-        description: "We deploy it to a live URL. You point your domain to it — we walk you through the 10-minute setup.",
+        description: "Tech-savvy? We hand it over and you integrate it however you like. Prefer to just have it work? We host it under your domain for $20/mo.",
         iconBg: "bg-[#c98dc0]",
     },
 ];
@@ -98,17 +98,17 @@ export default function FixYourPage() {
 
                         <AnimatedContent distance={30} delay={0.1}>
                             <h1 className="text-center font-urbanist text-5xl/15 md:text-6xl/18 mt-4 font-bold max-w-2xl">
-                                <span style={{ color: "#eef9f8" }}>Your page should be getting you bookings.</span>
+                                <span style={{ color: "#eef9f8" }}>Your business is good.</span>
                                 <br />
-                                <span className="text-gray-800">Let&apos;s <span className="underline decoration-2 underline-offset-4">fix it.</span></span>
+                                <span className="text-gray-800">Your page should<br /><span className="underline decoration-2 underline-offset-4">show it.</span></span>
                             </h1>
                         </AnimatedContent>
 
                         <AnimatedContent distance={30} delay={0.2}>
                             <p className="text-center text-base/7 text-zinc-700 max-w-xl mt-4">
-                                We take your existing page and rebuild it with a cleaner layout, better section order, and a more obvious path to booking.
+                                Most visitors decide in seconds whether to book or keep scrolling. We rebuild your page so those first few seconds build confidence and point them exactly where you want them to go.
                                 <br /><br />
-                                Same words. Cleaner layout. More bookings.
+                                One day. Live and ready.
                             </p>
                         </AnimatedContent>
 
