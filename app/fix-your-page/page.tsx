@@ -1,8 +1,17 @@
 "use client";
 import AnimatedContent from "@/components/animated-content";
 import FypModal from "@/components/fyp-modal";
-import { ArrowUpRightIcon, CheckIcon, ClipboardIcon, PencilIcon, RocketIcon } from "lucide-react";
-import { useState } from "react";
+import { ArrowUpRightIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon, ClipboardIcon, PencilIcon, RocketIcon } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+
+const qrImages = [
+    { src: "/assets/menu.png", alt: "Interactive QR menu" },
+    { src: "/assets/add-to-order.png", alt: "Add to order flow" },
+    { src: "/assets/ask-waiter.png", alt: "Ask waiter requests" },
+    { src: "/assets/outstanding-req2.png", alt: "Staff dashboard overview" },
+    { src: "/assets/outstanding-req.png", alt: "Table order details" },
+];
 
 const whatsIncluded = [
     "Cleaner layout using your existing copy — no rewriting needed",
@@ -35,15 +44,49 @@ const steps = [
 export default function FixYourPage() {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalSource, setModalSource] = useState("");
+    const [modalQrMenu, setModalQrMenu] = useState(false);
+    const [carouselIndex, setCarouselIndex] = useState(0);
+    const [carouselTransition, setCarouselTransition] = useState(true);
+    const [carouselHovered, setCarouselHovered] = useState(false);
+    const carouselPaused = useRef(false);
 
-    function openModal(source: string) {
+    useEffect(() => {
+        carouselPaused.current = carouselHovered;
+    }, [carouselHovered]);
+
+    useEffect(() => {
+        const id = setInterval(() => {
+            if (!carouselPaused.current) {
+                setCarouselIndex(i => i + 1); // advances into clone at qrImages.length
+            }
+        }, 3500);
+        return () => clearInterval(id);
+    }, []);
+
+    // After landing on the clone, snap back to real index 0 without animation
+    function handleCarouselTransitionEnd() {
+        if (carouselIndex === qrImages.length) {
+            setCarouselTransition(false);
+            setCarouselIndex(0);
+        }
+    }
+
+    useEffect(() => {
+        if (!carouselTransition) {
+            const id = setTimeout(() => setCarouselTransition(true), 20);
+            return () => clearTimeout(id);
+        }
+    }, [carouselTransition]);
+
+    function openModal(source: string, withQr = false) {
         setModalSource(source);
+        setModalQrMenu(withQr);
         setModalOpen(true);
     }
 
     return (
         <>
-            <FypModal open={modalOpen} source={modalSource} onClose={() => setModalOpen(false)} />
+            <FypModal open={modalOpen} source={modalSource} initialQrMenu={modalQrMenu} onClose={() => setModalOpen(false)} />
             <main>
                 {/* Hero */}
                 <section className="bg-[url('/assets/hero-gradient-bg.png')] bg-cover bg-center bg-no-repeat px-4 md:px-16 lg:px-24 xl:px-32">
@@ -88,7 +131,7 @@ export default function FixYourPage() {
                 </section>
 
                 {/* What's included */}
-                <section className="border-y border-[#edf9f8] py-16 px-4 md:px-16 lg:px-24 xl:px-32">
+                <section className="border-y border-[#edf9f8] px-4 md:px-16 lg:px-24 xl:px-32">
                     <div className="max-w-7xl mx-auto border-x border-[#edf9f8]">
                         <div className="p-8 md:p-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                             <AnimatedContent>
@@ -114,7 +157,7 @@ export default function FixYourPage() {
                 </section>
 
                 {/* How it works */}
-                <section id="how-it-works" className="border-b border-[#edf9f8] py-16 px-4 md:px-16 lg:px-24 xl:px-32">
+                <section id="how-it-works" className="border-b border-[#edf9f8] px-4 md:px-16 lg:px-24 xl:px-32">
                     <div className="max-w-7xl mx-auto border-x border-[#edf9f8]">
                         <div className="p-8 md:p-16">
                             <AnimatedContent className="text-center mb-12">
@@ -201,6 +244,120 @@ export default function FixYourPage() {
                                         <ArrowUpRightIcon size={14} />
                                     </button>
                                 </AnimatedContent>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* QR Menu + Table Service Upgrade */}
+                <section className="border-b border-[#edf9f8] px-4 md:px-16 lg:px-24 xl:px-32">
+                    <div className="max-w-7xl mx-auto border-x border-[#edf9f8]">
+                        <div className="p-8 md:p-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <AnimatedContent>
+                                <p className="text-xs font-medium text-zinc-400 uppercase tracking-widest mb-3">Experience Upgrade</p>
+                                <h2 className="font-urbanist font-semibold text-3xl md:text-4xl text-gray-800">
+                                    Interactive QR Menu +<br />Table Service Upgrade
+                                </h2>
+                                <p className="text-zinc-500 text-base/7 mt-4">
+                                    Turn your menu into an interactive QR experience customers can browse on their phone — with photos, descriptions, and item reviews. Optional self-ordering and in-app waiter requests like water, check, or order modifications.
+                                </p>
+                                <p className="text-zinc-500 text-base/7 mt-3">
+                                    Includes a staff dashboard so your team can see table requests and orders faster — reducing wait time, mistakes, and service delays.
+                                </p>
+                                <button
+                                    onClick={() => openModal("Fix Your Page — QR Menu Add-on", true)}
+                                    className="flex items-center gap-1.5 mt-8 py-2.5 px-6 border border-purple-200 bg-linear-to-tl from-purple-600 to-purple-500 text-white rounded-full text-sm"
+                                >
+                                    Add this to my page
+                                    <ArrowUpRightIcon size={14} />
+                                </button>
+                            </AnimatedContent>
+
+                            {/* Carousel */}
+                            <AnimatedContent className="relative group" onMouseEnter={() => setCarouselHovered(true)} onMouseLeave={() => setCarouselHovered(false)}>
+                                <div className="relative overflow-hidden rounded-2xl border border-[#edf9f8] bg-[#f7fcfb] aspect-[4/3]">
+                                    {/* Sliding strip — includes clone of first image at end for seamless loop */}
+                                    <div
+                                        className={`flex h-full ${carouselTransition ? "transition-transform duration-500 ease-in-out" : ""}`}
+                                        style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
+                                        onTransitionEnd={handleCarouselTransitionEnd}
+                                    >
+                                        {[...qrImages, qrImages[0]].map((img, i) => (
+                                            <div key={i} className="relative shrink-0 w-full h-full">
+                                                <Image src={img.src} alt={img.alt} fill className="object-contain p-4" />
+                                            </div>
+                                        ))}
+                                    </div>
+                                    {/* Prev */}
+                                    <button
+                                        onClick={() => setCarouselIndex(i => i === 0 ? qrImages.length - 1 : i - 1)}
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 backdrop-blur rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity"
+                                        aria-label="Previous"
+                                    >
+                                        <ChevronLeftIcon size={16} className="text-gray-600" />
+                                    </button>
+                                    {/* Next */}
+                                    <button
+                                        onClick={() => setCarouselIndex(i => i + 1)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 backdrop-blur rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity"
+                                        aria-label="Next"
+                                    >
+                                        <ChevronRightIcon size={16} className="text-gray-600" />
+                                    </button>
+                                </div>
+                                {/* Dots */}
+                                <div className="flex justify-center gap-1.5 mt-4">
+                                    {qrImages.map((_, i) => (
+                                        <button
+                                            key={i}
+                                            onClick={() => setCarouselIndex(i)}
+                                            className={`size-1.5 rounded-full transition-colors ${i === carouselIndex % qrImages.length ? "bg-purple-500" : "bg-zinc-300"}`}
+                                            aria-label={`Go to slide ${i + 1}`}
+                                        />
+                                    ))}
+                                </div>
+                            </AnimatedContent>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Who's building it */}
+                <section className="border-b border-[#edf9f8] px-4 md:px-16 lg:px-24 xl:px-32">
+                    <div className="max-w-7xl mx-auto border-x border-[#edf9f8]">
+                        <div className="p-8 md:p-16">
+                            <AnimatedContent className="text-center mb-16">
+                                <h2 className="font-urbanist font-semibold text-3xl md:text-4xl text-gray-800">You&apos;re working with us directly</h2>
+                                <p className="text-zinc-500 text-base/7 mt-3 max-w-md mx-auto">No account managers. No handoffs. We build your page and we&apos;re the ones you text when something needs updating.</p>
+                            </AnimatedContent>
+                            <div className="flex flex-wrap justify-center gap-12 md:gap-20">
+                                {[
+                                    {
+                                        name: "Mai",
+                                        image: "/assets/mai.jpeg",
+                                        role: "Co-founder",
+                                        linkedin: "https://www.linkedin.com/in/mai-akiyoshi/",
+                                        bio: "At Gusto, she built the internal tool that let non-technical marketers ship landing pages in days instead of a month — the same problem she's solving here, just directly for small businesses. She later founded HeyMint, growing it to over a million users before it was acquired. She's a software engineer who knows how to make pages that convert, not just look good.",
+                                    },
+                                    {
+                                        name: "Ben",
+                                        image: "/assets/ben.jpeg",
+                                        role: "Co-founder",
+                                        linkedin: "https://www.linkedin.com/in/intenex/",
+                                        bio: "Thiel Fellow, Harvard dropout, and co-founder of Stream, which raised $20M from investors including Pantera Capital. He's spent years as a backend and full-stack engineer at YC-backed startups before moving into operations — he brings both technical depth and practical business judgment to what a company needs online.",
+                                    },
+                                ].map((person, i) => (
+                                    <AnimatedContent key={i} delay={i * 0.15} className="flex flex-col max-w-xs">
+                                        <img src={person.image} alt={person.name} className="w-52 h-64 object-cover rounded-lg" />
+                                        <div className="flex items-center gap-2 mt-4">
+                                            <h3 className="text-lg font-medium text-gray-800">{person.name}</h3>
+                                            <a href={person.linkedin} target="_blank" rel="noopener noreferrer" className="text-purple-500 hover:text-purple-600">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                                            </a>
+                                        </div>
+                                        <p className="text-purple-500 text-sm font-medium">{person.role}</p>
+                                        <p className="text-zinc-500 text-sm mt-3 leading-6">{person.bio}</p>
+                                    </AnimatedContent>
+                                ))}
                             </div>
                         </div>
                     </div>

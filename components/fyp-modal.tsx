@@ -10,15 +10,16 @@ type Props = {
     open: boolean;
     source: string;
     onClose: () => void;
+    initialQrMenu?: boolean;
 };
 
-export default function FypModal({ open, source, onClose }: Props) {
+export default function FypModal({ open, source, onClose, initialQrMenu = false }: Props) {
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [qrMenuExpanded, setQrMenuExpanded] = useState(false);
     const [formData, setFormData] = useState({
-        name: "", email: "", business: "", website: "", businessType: "", notes: "", qrMenu: false,
+        name: "", email: "", business: "", website: "", businessType: "", notes: "", qrMenu: initialQrMenu,
     });
 
     if (!open) return null;
