@@ -1,11 +1,6 @@
 import { Inter, Urbanist } from "next/font/google";
 import "./globals.css";
 import { Metadata } from "next";
-import Navbar from "@/components/navbar";
-import LenisScroll from "@/components/lenis";
-import Footer from "@/components/footer";
-import { ModalProvider } from "@/contexts/modal-context";
-import ContactModal from "@/components/contact-modal";
 
 const inter = Inter({
     variable: "--font-sans",
@@ -61,13 +56,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <ModalProvider>
-                    <LenisScroll />
-                    <Navbar />
-                    {children}
-                    <Footer />
-                    <ContactModal />
-                </ModalProvider>
+                {children}
             </body>
         </html>
     );
