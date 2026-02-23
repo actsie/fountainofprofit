@@ -7,12 +7,31 @@ export default function ContactModal() {
     const { open, closeModal } = useModal();
     const [jdMode, setJdMode] = useState<"url" | "paste">("url");
     const [submitted, setSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [formData, setFormData] = useState({
+        name: "", email: "", company: "", website: "", linkedin: "",
+        jdUrl: "", jdText: "", techStack: "", notes: "",
+    });
 
     if (!open) return null;
 
-    function handleSubmit(e: React.FormEvent) {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+
+    async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        setSubmitted(true);
+        setLoading(true);
+        try {
+            await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ...formData, jdMode }),
+            });
+            setSubmitted(true);
+        } finally {
+            setLoading(false);
+        }
     }
 
     function handleClose() {
@@ -59,33 +78,30 @@ export default function ContactModal() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-sm font-medium text-gray-700">Name <span className="text-purple-500">*</span></label>
-                                <input required type="text" placeholder="Your name" className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300" />
+                                <input required name="name" value={formData.name} onChange={handleChange} type="text" placeholder="Your name" className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300" />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-sm font-medium text-gray-700">Email <span className="text-purple-500">*</span></label>
-                                <input required type="email" placeholder="you@company.com" className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300" />
+                                <input required name="email" value={formData.email} onChange={handleChange} type="email" placeholder="you@company.com" className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300" />
                             </div>
                         </div>
 
-                        {/* Company name + URL */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-sm font-medium text-gray-700">Company name <span className="text-purple-500">*</span></label>
-                                <input required type="text" placeholder="Acme Corp" className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300" />
+                                <input required name="company" value={formData.company} onChange={handleChange} type="text" placeholder="Acme Corp" className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300" />
                             </div>
                             <div className="flex flex-col gap-1.5">
                                 <label className="text-sm font-medium text-gray-700">Company website</label>
-                                <input type="url" placeholder="https://acmecorp.com" className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300" />
+                                <input name="website" value={formData.website} onChange={handleChange} type="url" placeholder="https://acmecorp.com" className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300" />
                             </div>
                         </div>
 
-                        {/* LinkedIn */}
                         <div className="flex flex-col gap-1.5">
                             <label className="text-sm font-medium text-gray-700">Company LinkedIn</label>
-                            <input type="url" placeholder="https://linkedin.com/company/acmecorp" className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300" />
+                            <input name="linkedin" value={formData.linkedin} onChange={handleChange} type="url" placeholder="https://linkedin.com/company/acmecorp" className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300" />
                         </div>
 
-                        {/* Job description */}
                         <div className="flex flex-col gap-1.5">
                             <div className="flex items-center justify-between">
                                 <label className="text-sm font-medium text-gray-700">Job description <span className="text-purple-500">*</span></label>
@@ -95,26 +111,24 @@ export default function ContactModal() {
                                 </div>
                             </div>
                             {jdMode === "url" ? (
-                                <input required type="url" placeholder="https://ashbyhq.com/jobs/..." className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300" />
+                                <input required name="jdUrl" value={formData.jdUrl} onChange={handleChange} type="url" placeholder="https://ashbyhq.com/jobs/..." className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300" />
                             ) : (
-                                <textarea required rows={4} placeholder="Paste the job description here..." className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300 resize-none" />
+                                <textarea required name="jdText" value={formData.jdText} onChange={handleChange} rows={4} placeholder="Paste the job description here..." className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300 resize-none" />
                             )}
                         </div>
 
-                        {/* Tech stack */}
                         <div className="flex flex-col gap-1.5">
                             <label className="text-sm font-medium text-gray-700">Tech stack / tools <span className="text-zinc-400 font-normal">(CRM, email, ops tools)</span></label>
-                            <textarea rows={2} placeholder="e.g. Salesforce, Outreach, Notion, Zapier..." className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300 resize-none" />
+                            <textarea name="techStack" value={formData.techStack} onChange={handleChange} rows={2} placeholder="e.g. Salesforce, Outreach, Notion, Zapier..." className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300 resize-none" />
                         </div>
 
-                        {/* Anything else */}
                         <div className="flex flex-col gap-1.5">
                             <label className="text-sm font-medium text-gray-700">Anything else we should know? <span className="text-zinc-400 font-normal">(optional)</span></label>
-                            <textarea rows={2} placeholder="Context, timeline, specific challenges..." className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300 resize-none" />
+                            <textarea name="notes" value={formData.notes} onChange={handleChange} rows={2} placeholder="Context, timeline, specific challenges..." className="border border-[#edf9f8] bg-[#f7fcfb] rounded-lg px-3 py-2 text-sm text-gray-800 placeholder:text-zinc-400 focus:outline-none focus:border-purple-300 resize-none" />
                         </div>
 
-                        <button type="submit" className="mt-2 w-full py-2.5 bg-purple-500 hover:bg-purple-600 text-white rounded-full text-sm font-medium transition-colors">
-                            Send it over
+                        <button type="submit" disabled={loading} className="mt-2 w-full py-2.5 bg-purple-500 hover:bg-purple-600 disabled:opacity-60 text-white rounded-full text-sm font-medium transition-colors">
+                            {loading ? "Sending..." : "Send it over"}
                         </button>
                     </form>
                 )}
