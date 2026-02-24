@@ -648,15 +648,20 @@ export default function BeautySalonSample() {
                                 A premium beauty studio in San Francisco's Pacific Heights. Hair, skin, and lashes done right.
                             </p>
                             <div className="flex gap-2">
-                                {["f", "in", "ig"].map((s, i) => (
+                                {[
+                                    { icon: "/assets/beauty-salon/facebook.png", label: "Facebook" },
+                                    { icon: "/assets/beauty-salon/linkedin.png", label: "LinkedIn" },
+                                    { icon: "/assets/beauty-salon/social.png", label: "Instagram" },
+                                    { icon: "/assets/beauty-salon/yelp.png", label: "Yelp" },
+                                ].map((s, i) => (
                                     <a key={i} href="#" style={{
                                         width: "38px", height: "38px", borderRadius: "50%", backgroundColor: "#ede8ec",
-                                        color: "#D9A299", display: "flex", alignItems: "center", justifyContent: "center",
-                                        fontSize: "12px", fontWeight: 700, textDecoration: "none", transition: ".3s all ease"
+                                        display: "flex", alignItems: "center", justifyContent: "center",
+                                        textDecoration: "none", transition: ".3s all ease", flexShrink: 0
                                     }}
-                                        onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#D9A299"; (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; }}
-                                        onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#ede8ec"; (e.currentTarget as HTMLAnchorElement).style.color = "#D9A299"; }}>
-                                        {s}
+                                        onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#faf8f9"}
+                                        onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#ede8ec"}>
+                                        <Image src={s.icon} alt={s.label} width={18} height={18} style={{ objectFit: "contain" }} />
                                     </a>
                                 ))}
                             </div>
