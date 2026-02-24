@@ -246,15 +246,29 @@ export default function BeautySalonSample() {
                             </div>
                         </div>
                     </div>
-                    {/* Full-bleed image col */}
-                    <div className="flex-1 relative hidden lg:block" style={{ minHeight: "500px", borderRadius: "0 0 20px 0", overflow: "hidden" }}>
-                        <Image
-                            src="/assets/beauty-salon/interior-light.jpg"
-                            alt="Lume Studio interior"
-                            fill
-                            className="object-cover"
-                            priority
-                        />
+                    {/* Image + info col */}
+                    <div className="flex-1 hidden lg:flex flex-col" style={{ minHeight: "500px", borderRadius: "0 0 20px 0", overflow: "hidden" }}>
+                        <div style={{ position: "relative", flex: 1 }}>
+                            <Image
+                                src="/assets/beauty-salon/interior-light.jpg"
+                                alt="Lume Studio interior"
+                                fill
+                                className="object-cover"
+                                priority
+                            />
+                        </div>
+                        <div style={{ display: "flex", gap: "24px", padding: "16px 28px", justifyContent: "center" }}>
+                            {[
+                                { icon: "/assets/beauty-salon/pin-location.png", text: "2418 Fillmore St, San Francisco" },
+                                { icon: "/assets/beauty-salon/phone.png", text: "(415) 555-0182" },
+                                { icon: "/assets/beauty-salon/open.png", text: "Mon–Sat 9am – 7pm" },
+                            ].map((item, i) => (
+                                <div key={i} style={{ display: "flex", alignItems: "center", gap: "7px", color: "rgba(255,255,255,0.85)", fontSize: "12px" }}>
+                                    <Image src={item.icon} alt="" width={13} height={13} style={{ objectFit: "contain", opacity: 0.8 }} />
+                                    {item.text}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
