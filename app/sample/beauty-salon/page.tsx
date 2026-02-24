@@ -138,6 +138,10 @@ const serviceMenu = [
     },
 ];
 
+function scrollTo(id: string) {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+}
+
 export default function BeautySalonSample() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [testimonialIndex, setTestimonialIndex] = useState(0);
@@ -196,15 +200,17 @@ export default function BeautySalonSample() {
                         Lume<span style={{ opacity: 0.4 }}>.</span>
                     </a>
                     <div className="hidden md:flex items-center gap-8">
-                        {["Home", "Services", "About", "Gallery", "Blog", "Contact"].map(link => (
-                            <a key={link} href={`#${link.toLowerCase()}`} style={{ color: "#fff", opacity: 0.6, fontWeight: 500, fontSize: "14px", textDecoration: "none", transition: "opacity .3s" }}
+                        {["Home", "Services", "About", "Gallery", "Contact"].map(link => (
+                            <a key={link} href={`#${link.toLowerCase()}`}
+                                onClick={e => { e.preventDefault(); link === "Home" ? window.scrollTo({ top: 0, behavior: "smooth" }) : scrollTo(link.toLowerCase()); }}
+                                style={{ color: "#fff", opacity: 0.6, fontWeight: 500, fontSize: "14px", textDecoration: "none", transition: "opacity .3s", cursor: "pointer" }}
                                 onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
                                 onMouseLeave={e => (e.currentTarget.style.opacity = "0.6")}>
                                 {link}
                             </a>
                         ))}
                     </div>
-                    <a href="#contact" style={{ backgroundColor: "#DCC5B2", color: "#2f2a2f", fontWeight: 600, padding: "10px 24px", borderRadius: "30px", fontSize: "14px", textDecoration: "none" }}
+                    <a href="#contact" onClick={e => { e.preventDefault(); scrollTo("contact"); }} style={{ backgroundColor: "#DCC5B2", color: "#2f2a2f", fontWeight: 600, padding: "10px 24px", borderRadius: "30px", fontSize: "14px", textDecoration: "none" }}
                         className="hidden md:block">
                         Book Now
                     </a>
@@ -214,8 +220,8 @@ export default function BeautySalonSample() {
                 </div>
                 {mobileMenuOpen && (
                     <div className="md:hidden px-6 pt-4 pb-4 flex flex-col gap-4" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
-                        {["Home", "Services", "About", "Gallery", "Blog", "Contact"].map(link => (
-                            <a key={link} href={`#${link.toLowerCase()}`} onClick={() => setMobileMenuOpen(false)}
+                        {["Home", "Services", "About", "Gallery", "Contact"].map(link => (
+                            <a key={link} href={`#${link.toLowerCase()}`} onClick={e => { e.preventDefault(); setMobileMenuOpen(false); link === "Home" ? window.scrollTo({ top: 0, behavior: "smooth" }) : scrollTo(link.toLowerCase()); }}
                                 style={{ color: "#fff", opacity: 0.8, textDecoration: "none", fontSize: "14px" }}>
                                 {link}
                             </a>
@@ -237,10 +243,10 @@ export default function BeautySalonSample() {
                                 Precision cuts, radiance-restoring facials, and lash artistry — all in a space designed to make you feel exactly that.
                             </p>
                             <div className="flex flex-wrap gap-3">
-                                <a href="#contact" style={{ backgroundColor: "#DCC5B2", color: "#2f2a2f", fontWeight: 600, padding: "12px 30px", borderRadius: "30px", textDecoration: "none", fontSize: "14px", display: "inline-flex", alignItems: "center" }}>
+                                <a href="#contact" onClick={e => { e.preventDefault(); scrollTo("contact"); }} style={{ backgroundColor: "#DCC5B2", color: "#2f2a2f", fontWeight: 600, padding: "12px 30px", borderRadius: "30px", textDecoration: "none", fontSize: "14px", display: "inline-flex", alignItems: "center" }}>
                                     Book Now
                                 </a>
-                                <a href="#services" style={{ border: "2px solid rgba(255,255,255,0.3)", color: "#fff", fontWeight: 600, padding: "12px 30px", borderRadius: "30px", textDecoration: "none", fontSize: "14px", display: "inline-flex", alignItems: "center" }}>
+                                <a href="#full-services" onClick={e => { e.preventDefault(); scrollTo("full-services"); }} style={{ border: "2px solid rgba(255,255,255,0.3)", color: "#fff", fontWeight: 600, padding: "12px 30px", borderRadius: "30px", textDecoration: "none", fontSize: "14px", display: "inline-flex", alignItems: "center" }}>
                                     Our Services
                                 </a>
                             </div>
@@ -285,7 +291,7 @@ export default function BeautySalonSample() {
                             <p style={{ marginBottom: "24px" }}>
                                 Each service is tailored to you — no templates, no rushing. Just skilled hands and the right products.
                             </p>
-                            <a href="#contact" style={{ backgroundColor: "#2f2a2f", color: "#fff", fontWeight: 600, padding: "12px 28px", borderRadius: "30px", textDecoration: "none", fontSize: "14px", display: "inline-block" }}>
+                            <a href="#full-services" onClick={e => { e.preventDefault(); scrollTo("full-services"); }} style={{ backgroundColor: "#2f2a2f", color: "#fff", fontWeight: 600, padding: "12px 28px", borderRadius: "30px", textDecoration: "none", fontSize: "14px", display: "inline-block" }}>
                                 View All
                             </a>
                         </AnimatedContent>
@@ -345,7 +351,7 @@ export default function BeautySalonSample() {
                                 <p style={{ fontSize: "14px", color: "#2f2a2f", lineHeight: "22px", margin: 0 }}>
                                     Your next great hair day, facial, or lash set is one booking away.
                                 </p>
-                                <a href="#contact" style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#D9A299", color: "#fff", fontWeight: 600, fontSize: "14px", textDecoration: "none", padding: "12px 28px", borderRadius: "30px", alignSelf: "center" }}>
+                                <a href="#contact" onClick={e => { e.preventDefault(); scrollTo("contact"); }} style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#D9A299", color: "#fff", fontWeight: 600, fontSize: "14px", textDecoration: "none", padding: "12px 28px", borderRadius: "30px", alignSelf: "center" }}>
                                     Book a visit
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
                                 </a>
@@ -420,7 +426,7 @@ export default function BeautySalonSample() {
                                     </li>
                                 ))}
                             </ul>
-                            <a href="#contact" style={{ backgroundColor: "#2f2a2f", color: "#fff", fontWeight: 600, padding: "12px 28px", borderRadius: "30px", textDecoration: "none", fontSize: "14px", display: "inline-block" }}>
+                            <a href="#contact" onClick={e => { e.preventDefault(); scrollTo("contact"); }} style={{ backgroundColor: "#2f2a2f", color: "#fff", fontWeight: 600, padding: "12px 28px", borderRadius: "30px", textDecoration: "none", fontSize: "14px", display: "inline-block" }}>
                                 Book an Appointment
                             </a>
                         </AnimatedContent>
@@ -429,7 +435,7 @@ export default function BeautySalonSample() {
             </section>
 
             {/* Services Menu */}
-            <section style={{ padding: "0 0 7rem 0" }}>
+            <section id="full-services" style={{ padding: "0 0 7rem 0" }}>
                 <div className="max-w-6xl mx-auto px-6">
                     <AnimatedContent distance={30} delay={0} className="mb-10">
                         <h2 style={{ color: "#2f2a2f", fontWeight: 700, fontSize: "clamp(1.5rem, 3vw, 2rem)", margin: 0 }}>Full Services Menu</h2>
@@ -453,7 +459,7 @@ export default function BeautySalonSample() {
                         ))}
                     </div>
                     <AnimatedContent distance={30} delay={0.2} style={{ textAlign: "center", marginTop: "48px" }}>
-                        <a href="#contact" style={{ fontWeight: 600, color: "#2f2a2f", fontSize: "14px", textDecoration: "none", border: "1.5px solid #2f2a2f", padding: "12px 28px", borderRadius: "30px", display: "inline-block" }}>Book Now</a>
+                        <a href="#contact" onClick={e => { e.preventDefault(); scrollTo("contact"); }} style={{ fontWeight: 600, color: "#2f2a2f", fontSize: "14px", textDecoration: "none", border: "1.5px solid #2f2a2f", padding: "12px 28px", borderRadius: "30px", display: "inline-block" }}>Book Now</a>
                     </AnimatedContent>
                 </div>
             </section>
@@ -538,7 +544,7 @@ export default function BeautySalonSample() {
                     </div>
                     <AnimatedContent distance={30} delay={0.2} style={{ textAlign: "center", marginTop: "64px" }}>
                         <p style={{ fontSize: "clamp(1.1rem, 2vw, 1.4rem)", fontWeight: 600, color: "#2f2a2f", marginBottom: "24px" }}>Ready to experience Lume?</p>
-                        <a href="#contact" style={{ display: "inline-block", backgroundColor: "#D9A299", color: "#fff", fontWeight: 600, fontSize: "14px", textDecoration: "none", padding: "12px 28px", borderRadius: "30px" }}>Book Your Appointment</a>
+                        <a href="#contact" onClick={e => { e.preventDefault(); scrollTo("contact"); }} style={{ display: "inline-block", backgroundColor: "#D9A299", color: "#fff", fontWeight: 600, fontSize: "14px", textDecoration: "none", padding: "12px 28px", borderRadius: "30px" }}>Book Your Appointment</a>
                     </AnimatedContent>
                 </div>
             </section>
