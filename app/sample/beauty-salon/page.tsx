@@ -347,8 +347,8 @@ export default function BeautySalonSample() {
                                     </div>
                                 ))}
                             </div>
-                            <div style={{ backgroundColor: "#fff", borderRadius: "20px", padding: "32px 36px", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "20px", marginTop: "40px", position: "sticky", top: "96px" }}>
-                                <p style={{ fontSize: "14px", color: "#2f2a2f", lineHeight: "22px", margin: 0 }}>
+                            <div style={{ backgroundColor: "#fff", borderRadius: "20px", padding: "32px 36px", display: "flex", flexDirection: "column", alignItems: "center", gap: "20px", marginTop: "40px", position: "sticky", top: "96px" }}>
+                                <p style={{ fontSize: "14px", color: "#2f2a2f", lineHeight: "22px", margin: 0, textAlign: "center" }}>
                                     Your next great hair day, facial, or lash set is one booking away.
                                 </p>
                                 <a href="#contact" onClick={e => { e.preventDefault(); scrollTo("contact"); }} style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#D9A299", color: "#fff", fontWeight: 600, fontSize: "14px", textDecoration: "none", padding: "12px 28px", borderRadius: "30px", alignSelf: "center" }}>
@@ -499,7 +499,7 @@ export default function BeautySalonSample() {
                                 </button>
                                 <div style={{ overflow: "hidden" }}>
                                     <div key={`${testimonialIndex}-${slideDir}`} style={{ animation: `testimonial-slide-in-${slideDir} 0.4s ease` }}>
-                                        <blockquote style={{ fontSize: "17px", lineHeight: "32px", marginBottom: "40px", fontStyle: "italic" }}>
+                                        <blockquote style={{ fontSize: "17px", lineHeight: "32px", marginBottom: "40px", fontStyle: "italic", minHeight: "160px", display: "flex", alignItems: "center" }}>
                                             &ldquo;{t.quote}&rdquo;
                                         </blockquote>
                                         <div>
