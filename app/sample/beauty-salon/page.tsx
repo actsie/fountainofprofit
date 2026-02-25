@@ -185,7 +185,7 @@ export default function BeautySalonSample() {
             <div className="text-center text-xs py-2 px-4" style={{ backgroundColor: "#f5f1f4", color: "#D9A299" }}>
                 This is a sample page built by{" "}
                 <a href="/fix-your-page" className="underline font-medium transition-colors" style={{ color: "#D9A299" }}>
-                    Fountain of Scale
+                    Fountain of Profit
                 </a>
                 {" "}· Want one like this for your business?{" "}
                 <a href="/fix-your-page" className="underline font-medium transition-colors" style={{ color: "#D9A299" }}>
@@ -693,7 +693,7 @@ export default function BeautySalonSample() {
                         <p style={{ margin: 0 }}>
                             © 2025 Lume Studio. All rights reserved. ·{" "}
                             <a href="/fix-your-page" style={{ color: "#D9A299", fontWeight: 600, textDecoration: "underline" }}>
-                                Built by Fountain of Scale
+                                Built by Fountain of Profit
                             </a>
                         </p>
                         <div className="flex gap-6">

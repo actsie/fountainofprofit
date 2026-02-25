@@ -94,11 +94,11 @@ export default function SampleRestaurant() {
 
     return (
         <div className="bg-stone-50 min-h-screen font-serif">
-            {/* Fountain of Scale banner */}
+            {/* Fountain of Profit banner */}
             <div className="bg-amber-700 text-white text-center text-xs py-2 px-4 font-sans">
                 This is a sample page built by{" "}
                 <a href="/fix-your-page" className="underline font-medium hover:text-amber-200 transition-colors">
-                    Fountain of Scale
+                    Fountain of Profit
                 </a>
                 {" "}· Want one like this for your business?{" "}
                 <a href="/fix-your-page" className="underline font-medium hover:text-amber-200 transition-colors">
@@ -421,7 +421,7 @@ export default function SampleRestaurant() {
                 <p className="mt-6 text-stone-600 text-xs">
                     © 2025 Harvest Table. All rights reserved. ·{" "}
                     <a href="/fix-your-page" className="hover:text-stone-400 underline transition-colors">
-                        Built by Fountain of Scale
+                        Built by Fountain of Profit
                     </a>
                 </p>
             </footer>

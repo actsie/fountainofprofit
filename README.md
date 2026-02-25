@@ -1,6 +1,6 @@
-# Fountain of Scale
+# Fountain of Profit
 
-Landing page for [Fountain of Scale](https://fountainofscale.com) — automating roles before companies hire for them.
+Landing page for [Fountain of Profit](https://fountainofscale.com) — automating roles before companies hire for them.
 
 ## Stack
 

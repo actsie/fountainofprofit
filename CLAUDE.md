@@ -1,4 +1,4 @@
-# Fountain of Scale — Project Notes
+# Fountain of Profit — Project Notes
 
 ## Stack
 - Next.js (App Router), TypeScript, Tailwind CSS v4, GSAP animations, lucide-react

@@ -14,8 +14,8 @@ const urbanist = Urbanist({
 
 export const metadata: Metadata = {
     title: {
-        default: "Fountain of Scale",
-        template: "%s | Fountain of Scale",
+        default: "Fountain of Profit",
+        template: "%s | Fountain of Profit",
     },
     description:
         "Automate the repeatable parts of the role before you hire. We review what you're hiring for, build the automatable layer in 30 days, and hand it off.",
@@ -27,23 +27,23 @@ export const metadata: Metadata = {
         "SDR automation",
         "ops automation",
     ],
-    authors: [{ name: "Fountain of Scale" }],
-    creator: "Fountain of Scale",
-    applicationName: "Fountain of Scale",
+    authors: [{ name: "Fountain of Profit" }],
+    creator: "Fountain of Profit",
+    applicationName: "Fountain of Profit",
     appleWebApp: {
-        title: "Fountain of Scale",
+        title: "Fountain of Profit",
         capable: true,
         statusBarStyle: "default",
     },
     openGraph: {
-        title: "Fountain of Scale – Automate the role before you hire",
+        title: "Fountain of Profit – Automate the role before you hire",
         description:
             "The role you're hiring for has real judgment work at the center. Around it is prep, cleanup, and repetition. We automate that layer in 30 days.",
         type: "website",
     },
     twitter: {
         card: "summary_large_image",
-        title: "Fountain of Scale – Automate the role before you hire",
+        title: "Fountain of Profit – Automate the role before you hire",
         description:
             "Faster ramp. Tighter execution. Less busywork.",
     },

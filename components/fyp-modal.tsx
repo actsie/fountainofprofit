@@ -117,7 +117,7 @@ export default function FypModal({ open, source, onClose, initialQrMenu = false 
 
                         <div className="flex flex-col gap-1.5">
                             <label className="text-sm font-medium text-gray-700">Business name <span className="text-purple-500">*</span></label>
-                            <input name="business" value={formData.business} onChange={handleChange} type="text" placeholder="Fountain of Scale Salon" className={errors.business ? inputError : inputNormal} />
+                            <input name="business" value={formData.business} onChange={handleChange} type="text" placeholder="Fountain of Profit Salon" className={errors.business ? inputError : inputNormal} />
                             {errors.business && <p className="text-xs text-red-500">{errors.business}</p>}
                         </div>
 

@@ -19,7 +19,7 @@ export default function Navbar() {
                     <div className="max-w-7xl mx-auto flex items-center justify-between">
                         <Link href="#!" className="flex items-center gap-2">
                             <Image src="/assets/auto-factory.png" alt="Logo" width={28} height={28} className="h-7 w-7" />
-                            <span className="font-urbanist font-semibold text-gray-800 text-sm">Fountain of Scale</span>
+                            <span className="font-urbanist font-semibold text-gray-800 text-sm">Fountain of Profit</span>
                         </Link>
 
                         <div className="hidden md:flex gap-1 bg-white/50 backdrop-blur border border-[#edf9f8] rounded-full px-2 py-1.5">
@@ -44,7 +44,7 @@ export default function Navbar() {
                 <div className="flex items-center justify-between p-4">
                     <div className="flex items-center gap-2">
                         <Image src="/assets/auto-factory.png" alt="Logo" width={28} height={28} className="h-7 w-7" />
-                        <span className="font-urbanist font-semibold text-gray-800 text-sm">Fountain of Scale</span>
+                        <span className="font-urbanist font-semibold text-gray-800 text-sm">Fountain of Profit</span>
                     </div>
                     <XIcon className="size-6.5" onClick={() => setIsMenuOpen(false)} />
                 </div>

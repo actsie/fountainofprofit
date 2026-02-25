@@ -3,7 +3,7 @@ import { readFileSync } from "fs";
 import { join } from "path";
 
 export const runtime = "nodejs";
-export const alt = "Fountain of Scale";
+export const alt = "Fountain of Profit";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
