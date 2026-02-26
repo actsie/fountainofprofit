@@ -271,6 +271,15 @@ export default function HomeServicesPage() {
     const reviewsPerPage = 4;
     const totalPages = Math.ceil(testimonials.length / reviewsPerPage);
 
+    const tabBarRef = useRef<HTMLDivElement>(null);
+    const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+    const touchStartX = useRef<number | null>(null);
+    const touchStartY = useRef<number | null>(null);
+    const panelContainerRef = useRef<HTMLDivElement>(null);
+    const reviewTouchX = useRef<number | null>(null);
+    const reviewTouchY = useRef<number | null>(null);
+    const reviewContainerRef = useRef<HTMLDivElement>(null);
+
     const [heroMounted, setHeroMounted] = useState(false);
     useEffect(() => { const t = setTimeout(() => setHeroMounted(true), 80); return () => clearTimeout(t); }, []);
 
@@ -329,18 +338,67 @@ export default function HomeServicesPage() {
         return () => clearInterval(timer);
     }, [servicePaused]);
 
+    useEffect(() => {
+        const bar = tabBarRef.current;
+        const tab = tabRefs.current[activeService % services.length];
+        if (!bar || !tab) return;
+        bar.scrollTo({ left: tab.offsetLeft - bar.offsetWidth / 2 + tab.offsetWidth / 2, behavior: "smooth" });
+    }, [activeService]);
+
+    useEffect(() => {
+        const el = panelContainerRef.current;
+        if (!el) return;
+        const onTouchMove = (e: TouchEvent) => {
+            if (touchStartX.current === null || touchStartY.current === null) return;
+            const dx = Math.abs(e.touches[0].clientX - touchStartX.current);
+            const dy = Math.abs(e.touches[0].clientY - touchStartY.current);
+            if (dx > dy) e.preventDefault();
+        };
+        el.addEventListener("touchmove", onTouchMove, { passive: false });
+        return () => el.removeEventListener("touchmove", onTouchMove);
+    }, []);
+
+    useEffect(() => {
+        const el = reviewContainerRef.current;
+        if (!el) return;
+        const onTouchMove = (e: TouchEvent) => {
+            if (reviewTouchX.current === null || reviewTouchY.current === null) return;
+            const dx = Math.abs(e.touches[0].clientX - reviewTouchX.current);
+            const dy = Math.abs(e.touches[0].clientY - reviewTouchY.current);
+            if (dx > dy) e.preventDefault();
+        };
+        el.addEventListener("touchmove", onTouchMove, { passive: false });
+        return () => el.removeEventListener("touchmove", onTouchMove);
+    }, []);
+
     function handleServiceTransitionEnd() {
         if (activeService === services.length) {
             setServiceNoTransition(true);
             setActiveService(0);
             requestAnimationFrame(() => requestAnimationFrame(() => setServiceNoTransition(false)));
+        } else if (activeService === -1) {
+            setServiceNoTransition(true);
+            setActiveService(services.length - 1);
+            requestAnimationFrame(() => requestAnimationFrame(() => setServiceNoTransition(false)));
         }
     }
 
-    const svc = services[activeService];
+    const svc = services[activeService % services.length];
 
     return (
         <div style={{ fontFamily: "system-ui, -apple-system, 'Segoe UI', sans-serif", backgroundColor: "#f8fafc", color: "#374151", fontSize: "15px", lineHeight: "1.7" }}>
+            <style>{`
+                .hide-scrollbar::-webkit-scrollbar { display: none; }
+                @media (max-width: 767px) {
+                    .service-slide { height: auto !important; }
+                    .service-content { padding: 28px 20px !important; }
+                    .team-card { flex-direction: column !important; }
+                    .team-photos { width: 100% !important; padding: 0 !important; align-self: auto !important; }
+                    .team-photo-item { width: 100% !important; height: 180px !important; }
+                    .review-grid { grid-template-columns: 1fr !important; }
+                    .review-card { grid-column: span 1 !important; }
+                }
+            `}</style>
 
             {/* FOS Banner */}
             <div className="text-center text-xs py-2 px-4" style={{ backgroundColor: "#1e3a5f", color: "rgba(255,255,255,0.6)" }}>
@@ -591,9 +649,11 @@ export default function HomeServicesPage() {
 
                     <div style={{ display: "flex", flexDirection: "column", gap: "0", opacity: servicesVisible ? 1 : 0, transform: servicesVisible ? "translateY(0)" : "translateY(28px)", transition: "opacity 0.6s ease 0.15s, transform 0.6s ease 0.15s" }}>
                         {/* Tab nav — horizontal */}
-                        <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
+                        <div ref={tabBarRef} style={{ display: "flex", gap: "4px", flexWrap: "nowrap", overflowX: "auto", scrollbarWidth: "none", msOverflowStyle: "none" }} className="hide-scrollbar">
                             {services.map((s, i) => (
-                                <button key={s.id} onClick={() => { setActiveService(i % services.length); setServicePaused(true); setTimeout(() => setServicePaused(false), 4000); }}
+                                <button key={s.id}
+                                    ref={el => { tabRefs.current[i] = el; }}
+                                    onClick={() => { setActiveService(i); setServicePaused(true); setTimeout(() => setServicePaused(false), 4000); }}
                                     style={{
                                         padding: "12px 20px",
                                         border: "none",
@@ -601,6 +661,7 @@ export default function HomeServicesPage() {
                                         backgroundColor: "transparent",
                                         cursor: "pointer",
                                         transition: "all .2s",
+                                        flexShrink: 0,
                                     }}>
                                     <span style={{ fontWeight: (activeService % services.length) === i ? 700 : 500, color: (activeService % services.length) === i ? "#ea580c" : "#64748b", fontSize: "14px", transition: "color .2s", whiteSpace: "nowrap" }}>
                                         {s.name}
@@ -610,18 +671,31 @@ export default function HomeServicesPage() {
                         </div>
 
                         {/* Content panel — infinite sliding track */}
-                        <div style={{ borderRadius: "12px", overflow: "hidden", marginTop: "20px" }}
+                        <div ref={panelContainerRef} style={{ borderRadius: "12px", overflow: "hidden", marginTop: "20px" }}
                             onMouseEnter={() => setServicePaused(true)}
-                            onMouseLeave={() => setServicePaused(false)}>
+                            onMouseLeave={() => setServicePaused(false)}
+                            onTouchStart={e => { touchStartX.current = e.touches[0].clientX; touchStartY.current = e.touches[0].clientY; setServicePaused(true); }}
+                            onTouchEnd={e => {
+                                if (touchStartX.current === null) return;
+                                const dx = e.changedTouches[0].clientX - touchStartX.current;
+                                const dy = Math.abs(e.changedTouches[0].clientY - (touchStartY.current ?? 0));
+                                if (Math.abs(dx) > 40 && Math.abs(dx) > dy) {
+                                    if (dx < 0) setActiveService(i => i + 1);
+                                    else setActiveService(i => i - 1);
+                                }
+                                touchStartX.current = null;
+                                touchStartY.current = null;
+                                setTimeout(() => setServicePaused(false), 4000);
+                            }}>
                             <div
-                                style={{ display: "flex", transform: `translateX(-${activeService * 100}%)`, transition: serviceNoTransition ? "none" : "transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)" }}
+                                style={{ display: "flex", transform: `translateX(-${(activeService + 1) * 100}%)`, transition: serviceNoTransition ? "none" : "transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)" }}
                                 onTransitionEnd={handleServiceTransitionEnd}>
-                                {[...services, services[0]].map((s, idx) => (
-                                    <div key={idx} style={{ minWidth: "100%", backgroundColor: "#fff", display: "flex", flexDirection: "row", height: "580px" }}>
+                                {[services[services.length - 1], ...services, services[0]].map((s, idx) => (
+                                    <div key={idx} className="service-slide" style={{ minWidth: "100%", backgroundColor: "#fff", display: "flex", flexDirection: "row", height: "580px" }}>
                                         <div style={{ flex: 1, position: "relative" }} className="hidden md:block">
                                             <Image src={s.image} alt={s.label} fill className="object-cover" />
                                         </div>
-                                        <div style={{ flex: 1, padding: "56px 52px", overflowY: "auto" }}>
+                                        <div className="service-content" style={{ flex: 1, padding: "56px 52px", overflowY: "auto" }}>
                                             <p style={{ color: "#ea580c", fontWeight: 700, fontSize: "13px", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>{s.name}</p>
                                             <h3 style={{ color: "#0f172a", fontWeight: 800, fontSize: "1.6rem", lineHeight: 1.3, marginBottom: "14px" }}>{s.subtitle}</h3>
                                             <p style={{ color: "#64748b", fontSize: "15px", marginBottom: "24px", lineHeight: "1.75" }}>{s.description}</p>
@@ -736,7 +810,7 @@ export default function HomeServicesPage() {
             <section ref={teamRef2} id="team" style={{ padding: "5rem 0", background: "linear-gradient(to bottom, #fef3ec, #eff6ff)" }}>
                 <div className="max-w-5xl mx-auto px-6">
                     <div style={{ background: "linear-gradient(to bottom, #fef3ec, #eff6ff)", borderRadius: "24px", overflow: "hidden", display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end", position: "relative", opacity: teamVisible2 ? 1 : 0, transform: teamVisible2 ? "translateY(0)" : "translateY(32px)", transition: "opacity 0.65s ease, transform 0.65s ease" }}
-                        className="flex-col md:flex-row">
+                        className="team-card">
                         {/* Left: text */}
                         <div style={{ flex: 1, padding: "clamp(2.5rem, 5vw, 4.5rem)", paddingBottom: "clamp(2.5rem, 5vw, 4.5rem)" }}>
                             <p style={{ color: "#ea580c", fontWeight: 700, fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "14px" }}>Our Team</p>
@@ -753,10 +827,10 @@ export default function HomeServicesPage() {
                         </div>
                         {/* Right: 2x2 photo grid bleeding to bottom */}
                         <div style={{ flexShrink: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", padding: "0 0 0 8px", alignSelf: "flex-end", marginBottom: "-2px" }}
-                            className="w-full md:w-auto">
+                            className="team-photos">
                             {team.map((member, i) => (
                                 <div key={i} style={{ position: "relative", width: "200px", height: "240px", borderRadius: i === 0 ? "12px 0 0 0" : i === 1 ? "0 12px 0 0" : i === 2 ? "0" : "0", overflow: "hidden" }}
-                                    className="w-full md:w-[200px]">
+                                    className="team-photo-item">
                                     <Image src={member.image} alt={member.name} fill className="object-cover" />
                                     <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "linear-gradient(to top, rgba(15,23,42,0.7), transparent)", padding: "20px 10px 8px" }}>
                                         <p style={{ color: "#fff", fontWeight: 600, fontSize: "11px", margin: 0 }}>{member.name}</p>
@@ -808,14 +882,26 @@ export default function HomeServicesPage() {
                     </div>
 
                     {/* Sliding track */}
-                    <div style={{ overflow: "hidden" }}>
+                    <div ref={reviewContainerRef} style={{ overflow: "hidden" }}
+                        onTouchStart={e => { reviewTouchX.current = e.touches[0].clientX; reviewTouchY.current = e.touches[0].clientY; }}
+                        onTouchEnd={e => {
+                            if (reviewTouchX.current === null) return;
+                            const dx = e.changedTouches[0].clientX - reviewTouchX.current;
+                            const dy = Math.abs(e.changedTouches[0].clientY - (reviewTouchY.current ?? 0));
+                            if (Math.abs(dx) > 40 && Math.abs(dx) > dy) {
+                                if (dx < 0) setReviewPage(p => Math.min(totalPages - 1, p + 1));
+                                else setReviewPage(p => Math.max(0, p - 1));
+                            }
+                            reviewTouchX.current = null;
+                            reviewTouchY.current = null;
+                        }}>
                         <div style={{ display: "flex", transform: `translateX(-${reviewPage * 100}%)`, transition: "transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)" }}>
                             {Array.from({ length: totalPages }).map((_, pageIdx) => {
                                 const pageItems = testimonials.slice(pageIdx * reviewsPerPage, (pageIdx + 1) * reviewsPerPage);
                                 return (
-                                    <div key={pageIdx} style={{ minWidth: "100%", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px" }}>
+                                    <div key={pageIdx} className="review-grid" style={{ minWidth: "100%", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px" }}>
                                         {pageItems.map((review, i) => (
-                                            <div key={i}
+                                            <div key={i} className="review-card"
                                                 style={{
                                                     gridColumn: i === 0 || i === 3 ? "span 2" : "span 1",
                                                     backgroundColor: "#fff",
