@@ -3,6 +3,7 @@ import AnimatedContent from "@/components/animated-content";
 import FypModal from "@/components/fyp-modal";
 import { ArrowUpRightIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, ClipboardIcon, LinkedinIcon, PencilIcon, RocketIcon } from "lucide-react";
 import Image from "next/image";
+import { useModal } from "@/contexts/modal-context";
 import { useEffect, useRef, useState } from "react";
 
 const qrImages = [
@@ -80,6 +81,15 @@ export default function FixYourPage() {
             return () => clearTimeout(id);
         }
     }, [carouselTransition]);
+
+    const { open: navbarModalOpen, closeModal: closeNavbarModal } = useModal();
+
+    useEffect(() => {
+        if (navbarModalOpen) {
+            closeNavbarModal();
+            openModal("Navbar — Fix Your Page");
+        }
+    }, [navbarModalOpen]);
 
     function openModal(source: string, withQr = false) {
         setModalSource(source);
