@@ -542,10 +542,12 @@ export default function HomeServicesPage() {
                                     </div>
                                 ))}
                             </div>
-                            <a href="#contact" onClick={e => { e.preventDefault(); scrollTo("contact"); }}
-                                style={{ backgroundColor: "#1e3a5f", color: "#fff", fontWeight: 700, padding: "13px 28px", borderRadius: "6px", textDecoration: "none", fontSize: "15px", display: "inline-block" }}>
-                                Get a Free Quote
-                            </a>
+                            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                                <a href="#contact" onClick={e => { e.preventDefault(); scrollTo("contact"); }}
+                                    style={{ backgroundColor: "#1e3a5f", color: "#fff", fontWeight: 700, padding: "13px 28px", borderRadius: "6px", textDecoration: "none", fontSize: "15px", display: "inline-block" }}>
+                                    Get a Free Quote
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
