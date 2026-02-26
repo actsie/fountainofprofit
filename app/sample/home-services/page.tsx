@@ -267,6 +267,7 @@ export default function HomeServicesPage() {
     const [servicePaused, setServicePaused] = useState(false);
     const [serviceNoTransition, setServiceNoTransition] = useState(false);
     const [reviewPage, setReviewPage] = useState(0);
+    const [formService, setFormService] = useState("");
     const reviewsPerPage = 4;
     const totalPages = Math.ceil(testimonials.length / reviewsPerPage);
 
@@ -630,7 +631,7 @@ export default function HomeServicesPage() {
                                                     </li>
                                                 ))}
                                             </ul>
-                                            <a href="#contact" onClick={e => { e.preventDefault(); scrollTo("contact"); }}
+                                            <a href="#contact" onClick={e => { e.preventDefault(); setFormService(s.id); scrollTo("contact"); }}
                                                 style={{ backgroundColor: "#ea580c", color: "#fff", fontWeight: 700, padding: "13px 28px", borderRadius: "6px", textDecoration: "none", fontSize: "15px", display: "inline-block" }}>
                                                 Get a Quote for {s.name}
                                             </a>
@@ -695,13 +696,21 @@ export default function HomeServicesPage() {
                                 </div>
                                 <div>
                                     <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151", display: "block", marginBottom: "6px" }}>Service Needed</label>
-                                    <select style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: "6px", fontSize: "15px", outline: "none", backgroundColor: "#fff", boxSizing: "border-box" }}>
-                                        <option value="">Select a service...</option>
-                                        {services.map(s => (
-                                            <option key={s.id} value={s.id}>{s.label}</option>
-                                        ))}
-                                        <option value="other">Not sure / multiple services</option>
-                                    </select>
+                                    <div style={{ position: "relative" }}>
+                                        <select
+                                            value={formService}
+                                            onChange={e => setFormService(e.target.value)}
+                                            style={{ width: "100%", padding: "10px 36px 10px 14px", border: "1.5px solid #e2e8f0", borderRadius: "6px", fontSize: "15px", outline: "none", backgroundColor: "#fff", boxSizing: "border-box", appearance: "none", WebkitAppearance: "none" }}>
+                                            <option value="">Select a service...</option>
+                                            {services.map(s => (
+                                                <option key={s.id} value={s.id}>{s.label}</option>
+                                            ))}
+                                            <option value="other">Not sure / multiple services</option>
+                                        </select>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }}>
+                                            <path d="m6 9 6 6 6-6"/>
+                                        </svg>
+                                    </div>
                                 </div>
                                 <div>
                                     <label style={{ fontSize: "12px", fontWeight: 600, color: "#374151", display: "block", marginBottom: "6px" }}>Tell us about the job</label>
