@@ -53,6 +53,91 @@ export default function FixYourPage() {
     const [carouselTransition, setCarouselTransition] = useState(true);
     const [carouselHovered, setCarouselHovered] = useState(false);
     const carouselPaused = useRef(false);
+    const [lightboxCol, setLightboxCol] = useState<number | null>(null);
+    const [lightboxIdx, setLightboxIdx] = useState(0);
+    const [hoveredCol, setHoveredCol] = useState<number | null>(null);
+    const hoveredColRef = useRef<number | null>(null);
+    const colTrackRefs = useRef<(HTMLDivElement | null)[]>([null, null, null]);
+    const colWrapperRefs = useRef<(HTMLDivElement | null)[]>([null, null, null]);
+    const yOffsets = useRef([0, 0, 0]);
+    const halfHeights = useRef([0, 0, 0]);
+    const rAFRef = useRef<number | null>(null);
+
+    const galleryRestaurantImgs = [
+        "/assets/gallery/resto-sample-hero.png",
+        "/assets/gallery/resto-sample-hero2.png",
+        "/assets/gallery/resto-sample-about-us.png",
+        "/assets/gallery/resto-sample-menu.png",
+        "/assets/gallery/resto-sample-testimonials.png",
+        "/assets/gallery/resto-sample-form.png",
+    ];
+    const galleryBeautyImgs = [
+        "/assets/gallery/beauty-salon-sample-hero.png",
+        "/assets/gallery/beauty-salon-sample-service.png",
+        "/assets/gallery/beauty-salon-sample-gallery.png",
+        "/assets/gallery/beauty-salon-sample-why-us.png",
+        "/assets/gallery/beauty-salon-sample-testimonials.png",
+        "/assets/gallery/beauty-salon-sample-about-us.png",
+        "/assets/gallery/beauty-salon-sample-menu.png",
+        "/assets/gallery/beauty-salon-sample-form.png",
+        "/assets/gallery/beauty-salon-sample-cta.png",
+        "/assets/gallery/beauty-salon-sample-footer.png",
+    ];
+    const galleryHomeImgs = [
+        "/assets/gallery/home-svc-sample-hero.png",
+        "/assets/gallery/home-svc-sample-svcs.png",
+        "/assets/gallery/home-svc-sample-why-us.png",
+        "/assets/gallery/home-svc-sample-team.png",
+        "/assets/gallery/home-svc-sample-testimonials.png",
+        "/assets/gallery/home-svc-sample-form.png",
+        "/assets/gallery/home-svc-sample-footer.png",
+    ];
+    const galleryCols = [
+        { images: galleryRestaurantImgs, label: "Harvest Table", url: "/sample", color: "#b45309" },
+        { images: galleryBeautyImgs, label: "Lume Studio", url: "/sample/beauty-salon", color: "#D9A299" },
+        { images: galleryHomeImgs, label: "AllPro Services", url: "/sample/home-services", color: "#ea580c" },
+    ];
+
+    useEffect(() => {
+        hoveredColRef.current = hoveredCol;
+    }, [hoveredCol]);
+
+    useEffect(() => {
+        if (lightboxCol === null) return;
+        const len = galleryCols[lightboxCol].images.length;
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === "ArrowRight") setLightboxIdx(i => (i + 1) % len);
+            else if (e.key === "ArrowLeft") setLightboxIdx(i => (i - 1 + len) % len);
+            else if (e.key === "Escape") setLightboxCol(null);
+        };
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+    }, [lightboxCol]);
+
+    useEffect(() => {
+        const id = setTimeout(() => {
+            colTrackRefs.current.forEach((el, i) => {
+                if (el) halfHeights.current[i] = el.scrollHeight / 2;
+            });
+        }, 300);
+        return () => clearTimeout(id);
+    }, []);
+
+    useEffect(() => {
+        const speed = 1.2;
+        function tick() {
+            colTrackRefs.current.forEach((el, i) => {
+                if (!el || hoveredColRef.current === i) return;
+                yOffsets.current[i] += speed;
+                const half = halfHeights.current[i] || el.scrollHeight / 2;
+                if (yOffsets.current[i] >= half) yOffsets.current[i] -= half;
+                el.style.transform = `skewY(-6deg) translateY(-${yOffsets.current[i]}px)`;
+            });
+            rAFRef.current = requestAnimationFrame(tick);
+        }
+        rAFRef.current = requestAnimationFrame(tick);
+        return () => { if (rAFRef.current) cancelAnimationFrame(rAFRef.current); };
+    }, []);
 
     useEffect(() => {
         carouselPaused.current = carouselHovered;
@@ -168,6 +253,108 @@ export default function FixYourPage() {
                         </div>
                     </div>
                 </section>
+
+                {/* Gallery */}
+                <section className="border-b border-[#edf9f8] overflow-hidden bg-white">
+                    <div className="text-center pt-14 pb-10 px-6">
+                        <p className="text-purple-500 text-xs font-semibold uppercase tracking-widest mb-3">Our Work</p>
+                        <h2 className="font-urbanist font-semibold text-3xl md:text-4xl text-gray-800">Pages we&apos;ve built</h2>
+                        <p className="text-zinc-500 text-base mt-3 max-w-sm mx-auto leading-relaxed">
+                            A few examples across different industries — all done in one day.
+                        </p>
+                    </div>
+
+                    <div style={{ overflow: "hidden", height: "540px", maskImage: "linear-gradient(to bottom, transparent 0%, white 20%, white 88%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, white 20%, white 88%, transparent 100%)" }}>
+                        <div style={{ display: "flex", gap: "12px", height: "100%" }}>
+                            {galleryCols.map((col, colIdx) => (
+                                <div key={colIdx}
+                                    ref={el => { colWrapperRefs.current[colIdx] = el; }}
+                                    style={{ flex: 1, overflow: "hidden" }}
+                                    onMouseEnter={() => setHoveredCol(colIdx)}
+                                    onMouseLeave={() => setHoveredCol(null)}>
+                                    <div ref={el => { colTrackRefs.current[colIdx] = el; }}
+                                        style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                                        {[...col.images, ...col.images].map((src, i) => (
+                                            <div key={i} onClick={() => { setLightboxCol(colIdx); setLightboxIdx(i % col.images.length); }}
+                                                style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: "10px", overflow: "hidden", cursor: "zoom-in", flexShrink: 0 }}>
+                                                <Image src={src} alt={col.label} fill className="object-cover transition-transform duration-200 hover:scale-105" />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="text-center pb-14 pt-8 flex flex-col items-center gap-4">
+                        <p className="text-zinc-400 text-xs">Hover to pause · Click any image to view</p>
+                        <p className="text-zinc-600 font-medium">Want a page like these?</p>
+                        <button
+                            onClick={() => openModal("Fix Your Page — Gallery CTA")}
+                            className="flex items-center gap-1.5 py-2.5 px-7 border border-purple-200 bg-linear-to-tl from-purple-600 to-purple-500 text-white rounded-full text-sm"
+                        >
+                            Fix my page
+                            <ArrowUpRightIcon size={14} />
+                        </button>
+                    </div>
+                </section>
+
+                {lightboxCol !== null && (() => {
+                    const imgs = galleryCols[lightboxCol].images;
+                    const label = galleryCols[lightboxCol].label;
+                    const url = galleryCols[lightboxCol].url;
+                    const themeColor = galleryCols[lightboxCol].color;
+                    const len = imgs.length;
+                    return (
+                        <div onClick={() => setLightboxCol(null)}
+                            style={{ position: "fixed", inset: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
+                            <div style={{ position: "absolute", inset: 0, backgroundColor: "rgba(0,0,0,0.85)", backdropFilter: "blur(12px)" }} />
+
+                            {/* Image + Live Preview button */}
+                            <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "8px" }}
+                                onClick={e => e.stopPropagation()}>
+                                <a href={url} target="_blank" rel="noopener noreferrer"
+                                    style={{ backgroundColor: themeColor, color: "#fff", fontSize: "12px", fontWeight: 600, padding: "6px 14px", borderRadius: "16px", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "5px" }}>
+                                    Live preview
+                                    <ArrowUpRightIcon size={12} />
+                                </a>
+                                <div style={{ position: "relative", width: "min(90vw, 1000px)", aspectRatio: "16/9", borderRadius: "16px", overflow: "hidden" }}>
+                                    <Image src={imgs[lightboxIdx]} alt={label} fill className="object-cover" />
+                                </div>
+                            </div>
+
+                            {/* Prev */}
+                            <button onClick={e => { e.stopPropagation(); setLightboxIdx(i => (i - 1 + len) % len); }}
+                                style={{ position: "absolute", left: "24px", zIndex: 2, background: "rgba(255,255,255,0.12)", border: "none", color: "#fff", width: "48px", height: "48px", borderRadius: "50%", cursor: "pointer", fontSize: "22px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                ‹
+                            </button>
+
+                            {/* Next */}
+                            <button onClick={e => { e.stopPropagation(); setLightboxIdx(i => (i + 1) % len); }}
+                                style={{ position: "absolute", right: "24px", zIndex: 2, background: "rgba(255,255,255,0.12)", border: "none", color: "#fff", width: "48px", height: "48px", borderRadius: "50%", cursor: "pointer", fontSize: "22px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                ›
+                            </button>
+
+                            {/* Close */}
+                            <button onClick={() => setLightboxCol(null)}
+                                style={{ position: "absolute", top: "24px", right: "28px", zIndex: 2, background: "rgba(255,255,255,0.1)", border: "none", color: "#fff", width: "40px", height: "40px", borderRadius: "50%", cursor: "pointer", fontSize: "20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                ×
+                            </button>
+
+                            {/* Counter + dots */}
+                            <div style={{ position: "absolute", bottom: "28px", left: 0, right: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", zIndex: 2 }}
+                                onClick={e => e.stopPropagation()}>
+                                <div style={{ display: "flex", gap: "6px" }}>
+                                    {imgs.map((_, i) => (
+                                        <button key={i} onClick={() => setLightboxIdx(i)}
+                                            style={{ width: i === lightboxIdx ? "20px" : "7px", height: "7px", borderRadius: "4px", border: "none", cursor: "pointer", backgroundColor: i === lightboxIdx ? "#fff" : "rgba(255,255,255,0.3)", transition: "all .25s", padding: 0 }} />
+                                    ))}
+                                </div>
+                                <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "12px", margin: 0 }}>{label} · {lightboxIdx + 1} / {len}</p>
+                            </div>
+                        </div>
+                    );
+                })()}
 
                 {/* How it works */}
                 <section id="how-it-works" className="border-b border-[#edf9f8] px-4 md:px-16 lg:px-24 xl:px-32">

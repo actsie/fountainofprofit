@@ -398,6 +398,10 @@ export default function HomeServicesPage() {
                     .review-grid { grid-template-columns: 1fr !important; }
                     .review-card { grid-column: span 1 !important; }
                 }
+                @media (min-width: 768px) {
+                    .team-photo-item:nth-child(1) { border-radius: 0 !important; }
+                    .team-photo-item:nth-child(3) { border-radius: 0 !important; }
+                }
             `}</style>
 
             {/* FOS Banner */}
@@ -829,7 +833,7 @@ export default function HomeServicesPage() {
                         <div style={{ flexShrink: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", padding: "0 0 0 8px", alignSelf: "flex-end", marginBottom: "-2px" }}
                             className="team-photos">
                             {team.map((member, i) => (
-                                <div key={i} style={{ position: "relative", width: "200px", height: "240px", borderRadius: i === 0 ? "12px 0 0 0" : i === 1 ? "0 12px 0 0" : i === 2 ? "0 0 0 12px" : "0 0 12px 0", overflow: "hidden" }}
+                                <div key={i} style={{ position: "relative", width: "200px", height: "240px", borderRadius: i === 0 ? "20px 0 0 0" : i === 1 ? "0 20px 0 0" : i === 2 ? "0 0 0 20px" : "0 0 20px 0", overflow: "hidden" }}
                                     className="team-photo-item">
                                     <Image src={member.image} alt={member.name} fill className="object-cover" />
                                     <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "linear-gradient(to top, rgba(15,23,42,0.7), transparent)", padding: "20px 10px 8px" }}>
