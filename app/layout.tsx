@@ -1,6 +1,7 @@
 import { Inter, Urbanist } from "next/font/google";
 import "./globals.css";
 import { Metadata } from "next";
+import Script from "next/script";
 
 const inter = Inter({
     variable: "--font-sans",
@@ -55,6 +56,15 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
+            <head>
+                <Script async src="https://www.googletagmanager.com/gtag/js?id=G-ZC38R6HLVP" strategy="afterInteractive" />
+                <Script id="gtag-init" strategy="afterInteractive">{`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', 'G-ZC38R6HLVP');
+                `}</Script>
+            </head>
             <body>
                 {children}
             </body>
