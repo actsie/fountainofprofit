@@ -58,7 +58,6 @@ export default function FixYourPage() {
     const [hoveredCol, setHoveredCol] = useState<number | null>(null);
     const colTrackRefs = useRef<(HTMLDivElement | null)[]>([null, null, null]);
     const colWrapperRefs = useRef<(HTMLDivElement | null)[]>([null, null, null]);
-    const colAnims = useRef<(Animation | null)[]>([null, null, null]);
 
     const galleryRestaurantImgs = [
         "/assets/gallery/resto-sample-hero.jpg",
@@ -96,31 +95,34 @@ export default function FixYourPage() {
     ];
 
     useEffect(() => {
-        const rafId = requestAnimationFrame(() => {
+        const style = document.createElement("style");
+        style.textContent = `
+            @keyframes gallery-scroll {
+                from { transform: skewY(-6deg) translateY(0); }
+                to { transform: skewY(-6deg) translateY(-50%); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        const id = setTimeout(() => {
             colTrackRefs.current.forEach((el, i) => {
                 if (!el) return;
                 const half = el.scrollHeight / 2;
-                const duration = (half / 72) * 1000; // 72px/s = 1.2px/frame @ 60fps
-                const anim = el.animate(
-                    [
-                        { transform: `skewY(-6deg) translateY(0%)` },
-                        { transform: `skewY(-6deg) translateY(-50%)` },
-                    ],
-                    { duration, iterations: Infinity, easing: "linear" }
-                );
-                colAnims.current[i] = anim;
+                const duration = (half / 72) * 1000;
+                el.style.animation = `gallery-scroll ${duration}ms linear infinite`;
             });
-        });
+        }, 100);
+
         return () => {
-            cancelAnimationFrame(rafId);
-            colAnims.current.forEach(a => a?.cancel());
+            clearTimeout(id);
+            document.head.removeChild(style);
         };
     }, []);
 
     useEffect(() => {
-        colAnims.current.forEach((anim, i) => {
-            if (!anim) return;
-            hoveredCol === i ? anim.pause() : anim.play();
+        colTrackRefs.current.forEach((el, i) => {
+            if (!el) return;
+            el.style.animationPlayState = hoveredCol === i ? "paused" : "running";
         });
     }, [hoveredCol]);
 
