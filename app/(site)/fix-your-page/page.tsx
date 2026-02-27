@@ -56,12 +56,9 @@ export default function FixYourPage() {
     const [lightboxCol, setLightboxCol] = useState<number | null>(null);
     const [lightboxIdx, setLightboxIdx] = useState(0);
     const [hoveredCol, setHoveredCol] = useState<number | null>(null);
-    const hoveredColRef = useRef<number | null>(null);
     const colTrackRefs = useRef<(HTMLDivElement | null)[]>([null, null, null]);
     const colWrapperRefs = useRef<(HTMLDivElement | null)[]>([null, null, null]);
-    const yOffsets = useRef([0, 0, 0]);
-    const halfHeights = useRef([0, 0, 0]);
-    const rAFRef = useRef<number | null>(null);
+    const colAnims = useRef<(Animation | null)[]>([null, null, null]);
 
     const galleryRestaurantImgs = [
         "/assets/gallery/resto-sample-hero.png",
@@ -99,7 +96,32 @@ export default function FixYourPage() {
     ];
 
     useEffect(() => {
-        hoveredColRef.current = hoveredCol;
+        const rafId = requestAnimationFrame(() => {
+            colTrackRefs.current.forEach((el, i) => {
+                if (!el) return;
+                const half = el.scrollHeight / 2;
+                const duration = (half / 72) * 1000; // 72px/s = 1.2px/frame @ 60fps
+                const anim = el.animate(
+                    [
+                        { transform: `skewY(-6deg) translateY(0%)` },
+                        { transform: `skewY(-6deg) translateY(-50%)` },
+                    ],
+                    { duration, iterations: Infinity, easing: "linear" }
+                );
+                colAnims.current[i] = anim;
+            });
+        });
+        return () => {
+            cancelAnimationFrame(rafId);
+            colAnims.current.forEach(a => a?.cancel());
+        };
+    }, []);
+
+    useEffect(() => {
+        colAnims.current.forEach((anim, i) => {
+            if (!anim) return;
+            hoveredCol === i ? anim.pause() : anim.play();
+        });
     }, [hoveredCol]);
 
     useEffect(() => {
@@ -114,30 +136,6 @@ export default function FixYourPage() {
         return () => window.removeEventListener("keydown", onKey);
     }, [lightboxCol]);
 
-    useEffect(() => {
-        const id = setTimeout(() => {
-            colTrackRefs.current.forEach((el, i) => {
-                if (el) halfHeights.current[i] = el.scrollHeight / 2;
-            });
-        }, 300);
-        return () => clearTimeout(id);
-    }, []);
-
-    useEffect(() => {
-        const speed = 1.2;
-        function tick() {
-            colTrackRefs.current.forEach((el, i) => {
-                if (!el || hoveredColRef.current === i) return;
-                yOffsets.current[i] += speed;
-                const half = halfHeights.current[i] || el.scrollHeight / 2;
-                if (yOffsets.current[i] >= half) yOffsets.current[i] -= half;
-                el.style.transform = `skewY(-6deg) translateY(-${yOffsets.current[i]}px)`;
-            });
-            rAFRef.current = requestAnimationFrame(tick);
-        }
-        rAFRef.current = requestAnimationFrame(tick);
-        return () => { if (rAFRef.current) cancelAnimationFrame(rAFRef.current); };
-    }, []);
 
     useEffect(() => {
         carouselPaused.current = carouselHovered;
@@ -273,10 +271,10 @@ export default function FixYourPage() {
                                     onMouseEnter={() => setHoveredCol(colIdx)}
                                     onMouseLeave={() => setHoveredCol(null)}>
                                     <div ref={el => { colTrackRefs.current[colIdx] = el; }}
-                                        style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                                        style={{ display: "flex", flexDirection: "column" }}>
                                         {[...col.images, ...col.images].map((src, i) => (
                                             <div key={i} onClick={() => { setLightboxCol(colIdx); setLightboxIdx(i % col.images.length); }}
-                                                style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: "10px", overflow: "hidden", cursor: "zoom-in", flexShrink: 0 }}>
+                                                style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: "10px", overflow: "hidden", cursor: "zoom-in", flexShrink: 0, marginBottom: "12px" }}>
                                                 <Image src={src} alt={col.label} fill className="object-cover transition-transform duration-200 hover:scale-105" />
                                             </div>
                                         ))}
