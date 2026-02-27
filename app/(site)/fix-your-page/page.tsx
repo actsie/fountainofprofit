@@ -7,11 +7,11 @@ import { useModal } from "@/contexts/modal-context";
 import { useEffect, useRef, useState } from "react";
 
 const qrImages = [
-    { src: "/assets/menu.png", alt: "Interactive QR menu" },
-    { src: "/assets/add-to-order.png", alt: "Add to order flow" },
-    { src: "/assets/ask-waiter.png", alt: "Ask waiter requests" },
-    { src: "/assets/outstanding-req2.png", alt: "Staff dashboard overview" },
-    { src: "/assets/outstanding-req.png", alt: "Table order details" },
+    { src: "/assets/menu.jpg", alt: "Interactive QR menu" },
+    { src: "/assets/add-to-order.jpg", alt: "Add to order flow" },
+    { src: "/assets/ask-waiter.jpg", alt: "Ask waiter requests" },
+    { src: "/assets/outstanding-req2.jpg", alt: "Staff dashboard overview" },
+    { src: "/assets/outstanding-req.jpg", alt: "Table order details" },
 ];
 
 const whatsIncluded = [
@@ -61,33 +61,33 @@ export default function FixYourPage() {
     const colAnims = useRef<(Animation | null)[]>([null, null, null]);
 
     const galleryRestaurantImgs = [
-        "/assets/gallery/resto-sample-hero.png",
-        "/assets/gallery/resto-sample-hero2.png",
-        "/assets/gallery/resto-sample-about-us.png",
-        "/assets/gallery/resto-sample-menu.png",
-        "/assets/gallery/resto-sample-testimonials.png",
-        "/assets/gallery/resto-sample-form.png",
+        "/assets/gallery/resto-sample-hero.jpg",
+        "/assets/gallery/resto-sample-hero2.jpg",
+        "/assets/gallery/resto-sample-about-us.jpg",
+        "/assets/gallery/resto-sample-menu.jpg",
+        "/assets/gallery/resto-sample-testimonials.jpg",
+        "/assets/gallery/resto-sample-form.jpg",
     ];
     const galleryBeautyImgs = [
-        "/assets/gallery/beauty-salon-sample-hero.png",
-        "/assets/gallery/beauty-salon-sample-service.png",
-        "/assets/gallery/beauty-salon-sample-gallery.png",
-        "/assets/gallery/beauty-salon-sample-why-us.png",
-        "/assets/gallery/beauty-salon-sample-testimonials.png",
-        "/assets/gallery/beauty-salon-sample-about-us.png",
-        "/assets/gallery/beauty-salon-sample-menu.png",
-        "/assets/gallery/beauty-salon-sample-form.png",
-        "/assets/gallery/beauty-salon-sample-cta.png",
-        "/assets/gallery/beauty-salon-sample-footer.png",
+        "/assets/gallery/beauty-salon-sample-hero.jpg",
+        "/assets/gallery/beauty-salon-sample-service.jpg",
+        "/assets/gallery/beauty-salon-sample-gallery.jpg",
+        "/assets/gallery/beauty-salon-sample-why-us.jpg",
+        "/assets/gallery/beauty-salon-sample-testimonials.jpg",
+        "/assets/gallery/beauty-salon-sample-about-us.jpg",
+        "/assets/gallery/beauty-salon-sample-menu.jpg",
+        "/assets/gallery/beauty-salon-sample-form.jpg",
+        "/assets/gallery/beauty-salon-sample-cta.jpg",
+        "/assets/gallery/beauty-salon-sample-footer.jpg",
     ];
     const galleryHomeImgs = [
-        "/assets/gallery/home-svc-sample-hero.png",
-        "/assets/gallery/home-svc-sample-svcs.png",
-        "/assets/gallery/home-svc-sample-why-us.png",
-        "/assets/gallery/home-svc-sample-team.png",
-        "/assets/gallery/home-svc-sample-testimonials.png",
-        "/assets/gallery/home-svc-sample-form.png",
-        "/assets/gallery/home-svc-sample-footer.png",
+        "/assets/gallery/home-svc-sample-hero.jpg",
+        "/assets/gallery/home-svc-sample-svcs.jpg",
+        "/assets/gallery/home-svc-sample-why-us.jpg",
+        "/assets/gallery/home-svc-sample-team.jpg",
+        "/assets/gallery/home-svc-sample-testimonials.jpg",
+        "/assets/gallery/home-svc-sample-form.jpg",
+        "/assets/gallery/home-svc-sample-footer.jpg",
     ];
     const galleryCols = [
         { images: galleryRestaurantImgs, label: "Harvest Table", url: "/sample", color: "#b45309" },
