@@ -7,11 +7,11 @@ import { useModal } from "@/contexts/modal-context";
 import { useEffect, useRef, useState } from "react";
 
 const qrImages = [
-    { src: "/assets/menu.jpg", alt: "Interactive QR menu" },
-    { src: "/assets/add-to-order.jpg", alt: "Add to order flow" },
-    { src: "/assets/ask-waiter.jpg", alt: "Ask waiter requests" },
-    { src: "/assets/outstanding-req2.jpg", alt: "Staff dashboard overview" },
-    { src: "/assets/outstanding-req.jpg", alt: "Table order details" },
+    { src: "/assets/menu.png", alt: "Interactive QR menu" },
+    { src: "/assets/add-to-order.png", alt: "Add to order flow" },
+    { src: "/assets/ask-waiter.png", alt: "Ask waiter requests" },
+    { src: "/assets/outstanding-req2.png", alt: "Staff dashboard overview" },
+    { src: "/assets/outstanding-req.png", alt: "Table order details" },
 ];
 
 const whatsIncluded = [
