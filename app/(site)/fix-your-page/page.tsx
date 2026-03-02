@@ -274,7 +274,7 @@ export default function FixYourPage() {
                                     onMouseLeave={() => setHoveredCol(null)}>
                                     <div ref={el => { colTrackRefs.current[colIdx] = el; }}
                                         style={{ display: "flex", flexDirection: "column" }}>
-                                        {[...col.images, ...col.images].map((src, i) => (
+                                        {[...col.images, ...col.images, ...col.images, ...col.images].map((src, i) => (
                                             <div key={i} onClick={() => { setLightboxCol(colIdx); setLightboxIdx(i % col.images.length); }}
                                                 style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: "10px", overflow: "hidden", cursor: "zoom-in", flexShrink: 0, marginBottom: "12px" }}>
                                                 <Image src={src} alt={col.label} fill className="object-cover transition-transform duration-200 hover:scale-105" />
